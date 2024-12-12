@@ -17,13 +17,10 @@ const multer = require('multer');
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-const dbURI = process.env.MONGO_URI;
+const dbURI = 'mongodb+srv://testAdmin:8JLL29AgGNOZAyFd@templemanagement.lcpzd.mongodb.net/?retryWrites=true&w=majority&appName=TempleManagement';
 
 // Connect MongoDB
-mongoose.connect(dbURI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose.connect(dbURI);
 
 app.use(bodyParser.json());
 
