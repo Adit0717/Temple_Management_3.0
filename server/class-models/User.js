@@ -7,7 +7,6 @@ const userSchema = mongoose.Schema({
     phone: String,
     firstName: String,
     lastName: String,
-    address: String,
     empId: {type: String, unique: true}
 });
 

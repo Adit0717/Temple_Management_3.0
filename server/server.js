@@ -72,7 +72,8 @@ app.post('/request-otp', async (req, res) => {
       transporter.sendMail({
         to: email,
         subject: 'Reset Your Password',
-        text: `Your OTP is ${otp}`
+        text: `Hello, 
+        Your OTP is ${otp}. Validity of this one-time password is 15 minutes.`
       }, (err, info) => {
         if (err) {s
           console.error('Error sending email:', err);
@@ -95,7 +96,7 @@ app.post('/request-otp', async (req, res) => {
 
 //API Endpoints for Login and Signup functionality
 app.post('/sign-up', async (req, res) => {
-    const { firstName, lastName, email, phone, password, address } = req.body;
+    const { firstName, lastName, email, phone, password } = req.body;
     const empId = Math.floor(10000 + Math.random() * 90000).toString();
   
     try {
@@ -109,7 +110,6 @@ app.post('/sign-up', async (req, res) => {
         email,
         phone,
         password: hashedPassword,
-        address,
         role : 'Devotee',
         empId
       });
@@ -118,9 +118,16 @@ app.post('/sign-up', async (req, res) => {
       const savedUser = await newUser.save();
       res.status(201).json(savedUser);
     } catch (err) {
-      console.error('Error adding user:', err);
-      res.status(500).send('Server Error');
-    }
+        console.error('Error adding user:', err);
+        if (err.code === 11000) {
+          const duplicateField = Object.keys(err.keyValue)[0];
+          return res
+            .status(400)
+            .json({ message: `Email  '${err.keyValue[duplicateField]}' already exists` });
+        }
+      
+        res.status(500).send('Server Error');
+      }      
   });
 
 app.post('/login', async (req, res) => {
@@ -183,7 +190,7 @@ app.patch('/reset-password', async (req, res) => {
 //------------------------------------------------------------------------------------ 
 //API Endpoints related to Priest
 app.post('/create-priest', async (req, res) => {
-  const { firstName, lastName, email, phone, password, address } = req.body;
+  const { firstName, lastName, email, phone, password } = req.body;
   const empId = Math.floor(10000 + Math.random() * 90000).toString();
 
   try {
@@ -197,7 +204,6 @@ app.post('/create-priest', async (req, res) => {
       email,
       phone,
       password: hashedPassword,
-      address,
       role : 'Priest',
       empId
     });
