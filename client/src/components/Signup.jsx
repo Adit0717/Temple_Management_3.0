@@ -2,6 +2,8 @@ import react, { useState } from "react";
 import '../components/styles/signup.css'
 import templeImage from '../assets/resolution-900.jpg'
 import { useNavigate } from "react-router-dom";
+import Navbar from "./NavBar";
+import Footer from "./Footer";
 //import { ToastContainer, toast } from 'react-toastify';
 
 const SingupPage = () => {
@@ -89,6 +91,8 @@ const SingupPage = () => {
 
     return(
         <div className='signup-page'>
+            <Navbar />
+            <div className="signup-content">
             <div className='signup-left'>
                 <img
                     src={templeImage}
@@ -116,7 +120,7 @@ const SingupPage = () => {
                     <label htmlFor="password"><strong>Password</strong></label>
                         <div className="password-container">
                             <input
-                            type={showPassword ? "text" : "password"} /* Dynamically set input type */
+                            type={showPassword ? "text" : "password"}
                             id="password"
                             name="password"
                             placeholder="Enter your password"
@@ -187,6 +191,8 @@ const SingupPage = () => {
                     Already have an account? <a href='/login'> Sign In </a>
                 </p>
             </div>
+            </div>
+            <Footer />
         </div>
     );
 };
