@@ -14,7 +14,7 @@ const Navbar = () => {
       </div>
       <ul className="navbar-menu">
         <li><a href="/">Home</a></li>
-        <li><a href="/live-stream">Live-stream</a></li>
+        <li><a href="/live-stream">Live-Stream</a></li>
         <li className="dropdown">
           <a href="/about-us/mission">About</a>
           <ul className="dropdown-menu">

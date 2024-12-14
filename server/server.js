@@ -5,6 +5,7 @@ const User=require('./class-models/User');
 const Service=require('./class-models/Service');
 const Announcement=require('./class-models/Announcement');
 const Appointment=require('./class-models/Appointment');
+const Event=require('./class-models/Event');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
@@ -410,6 +411,15 @@ app.delete('/events/:id', async (req, res) => {
   res.status(204).send();
 });
 
+app.get('/events', async (req, res) => {
+  try {
+    const events = await Event.find(); // Fetch all events from the database
+    res.json(events); // Send the events as JSON
+  } catch (err) {
+    console.error('Error fetching events:', err);
+    res.status(500).json({ message: 'Error fetching events' });
+  }
+});
 
 //Run the backend app in port mentioned in .env
 app.listen(PORT, () => {
