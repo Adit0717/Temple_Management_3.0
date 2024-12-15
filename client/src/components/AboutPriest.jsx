@@ -5,8 +5,7 @@ import './styles/aboutPriest.css'
 const AboutPriest = () => {
     return (
         <div>
-           <Navbar />
-           <main className="main-content">
+           <Navbar />           
                 <div className="priest-section">
                     <h1><u>Employed Priests</u></h1> 
                     <div className="priest-card">
@@ -52,8 +51,7 @@ const AboutPriest = () => {
                             <a href="tel:+12603021008" className="priest-link">260-302-1014</a>
                         </div>
                     </div>
-                </div>
-            </main>
+                </div>            
            <Footer />
         </div>
     );

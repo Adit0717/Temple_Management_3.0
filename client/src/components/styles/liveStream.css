@@ -1,8 +1,8 @@
 /* Section containing the live stream */
 .live-stream-section {
     position: relative;
-    min-height: 100vh; /* Cover the full viewport height */
-    background: url('./rammandir_2.jpg') no-repeat center center/cover; /* Fully fit the image */
+    min-height: 100vh;
+    background: url('./rammandir_2.jpg') no-repeat center center/cover;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -19,15 +19,15 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5); /* Dark overlay with 50% opacity */
+    background: rgba(0, 0, 0, 0.5);
     z-index: 1;
 }
 
 /* Card containing the content */
 .live-stream-card {
     position: relative;
-    z-index: 2; /* Place above the overlay */
-    background-color: rgba(255, 255, 255, 0.9); /* Slightly transparent white */
+    z-index: 2;
+    background-color: rgba(255, 255, 255, 0.9);
     padding: 30px;
     border-radius: 15px;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
@@ -73,7 +73,6 @@ ul {
     text-align: left;
 }
 
-/* Responsive design for smaller screens */
 @media screen and (max-width: 768px) {
     .live-stream-card {
         padding: 20px;
