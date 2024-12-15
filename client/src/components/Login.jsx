@@ -25,11 +25,13 @@ const LoginPage = () => {
   
       if (!email.includes("@")) {
         setError("Enter a valid email id");
+        setTimeout(() => setError(""), 5000);
         return;
       }
   
       if (password.length < 8) {
         setError("Password must be at least 8 characters");
+        setTimeout(() => setError(""), 5000);
         return;
       }
   
@@ -45,15 +47,21 @@ const LoginPage = () => {
         if (!response.ok) {
           const { message } = await response.json();
           setError(message || "Login failed");
+          setTimeout(() => setError(""), 5000);
           console.log(message);
         } else {
           const data = await response.json();
           console.log("Login successful:", data);
+          
+          localStorage.setItem("role", role);
+          localStorage.setItem("token", data.token);
+          
           navigate("/dashboard");
         }
       } catch (error) {
-        console.error("Error during login:", error);
+        console.error("Error during login:", error);        
         setError("An error occurred. Please try again.");
+        setTimeout(() => setError(""), 5000);
         console.log(error);
       }
     };

@@ -7,7 +7,9 @@ const userSchema = mongoose.Schema({
     phone: String,
     firstName: String,
     lastName: String,
-    empId: {type: String, unique: true}
+    empId: {type: String, unique: true},
+    otp: String,
+    otpExpiry: Date
 });
 
 module.exports = mongoose.model('User', userSchema);

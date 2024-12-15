@@ -1,10 +1,16 @@
 .priest-section {
     position: relative;
-    padding: 40px 20px;
+    padding: 40px 0;
     text-align: center;
-    background: url('./Ayodhya\ Ram\ Mandir\ Design\ Inside\ View.jpeg') no-repeat center center/cover;
+    background: url('./Ayodhya Ram Mandir Design Inside View.jpeg') no-repeat center center;
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
     color: white;
     min-height: 100vh;
+    width: 100%;
+    margin: 0;
+    overflow: hidden;
 }
 
 .priest-section::before {
@@ -25,14 +31,13 @@
 }
 
 .priest-section h1 {
-    font-size: 2.5em;
+    font-size: 2.8em;
     color: #ffa726;
     margin-bottom: 20px;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 1.2px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
 }
-
 
 .priest-card {
     display: grid;
@@ -44,7 +49,7 @@
 }
 
 .priest-item {
-    background: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 0.85);
     border: 1px solid #ddd;
     border-radius: 8px;
     padding: 20px;
@@ -58,7 +63,7 @@
 }
 
 .priest-item h3 {
-    font-size: 1.5em;
+    font-size: 1.6em;
     color: #ffa726;
     margin-bottom: 10px;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);

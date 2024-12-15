@@ -12,9 +12,6 @@ import Events from './components/Events';
 
 function App() {
   
-  const uriValue = 'http://localhost:3001';
-  localStorage.setItem('role', '');
-
   return (
     <div className='App'>
       <Router>

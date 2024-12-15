@@ -6,6 +6,7 @@ const Service=require('./class-models/Service');
 const Announcement=require('./class-models/Announcement');
 const Appointment=require('./class-models/Appointment');
 const Event=require('./class-models/Event');
+const NewsLetter=require('./class-models/NewsLetter');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
@@ -61,37 +62,76 @@ const transporter = nodemailer.createTransport({
   }
 });
 
-app.post('/request-otp', async (req, res) => {
+app.post('/generate-otp', async (req, res) => {
   const { email } = req.body;
-  try {
-    const user = await User.findOne({ email: email });
-    if (user) {
-      const otp = Math.floor(10000 + Math.random() * 90000).toString();
-      user.otp = otp;
-      await user.save();
 
-      transporter.sendMail({
-        to: email,
-        subject: 'Reset Your Password',
-        text: `Hello, 
-        Your OTP is ${otp}. Validity of this one-time password is 15 minutes.`
-      }, (err, info) => {
-        if (err) {s
-          console.error('Error sending email:', err);
-          res.status(500).send('Could not send OTP');
-        } else {
-          console.log('Email sent: ' + info.response);
-          res.send('OTP sent');
-        }
-      });
-    } else {
-      res.status(404).send('Email not found');
+  try {
+    // Check if email already exists
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ message: "Email already registered" });
     }
-  } catch (error) {
-    console.error('Database error:', error);
-    res.status(500).send('Server error');
+
+    // Generate OTP and expiry time
+    const otp = Math.floor(10000 + Math.random() * 90000).toString();
+    const otpExpiry = Date.now() + 15 * 60 * 1000; // Valid for 15 minutes
+
+    // Save OTP and expiry to a temporary user object
+    const newUser = new User({
+      email,
+      otp,
+      otpExpiry,
+      role: "Devotee",
+    });
+    await newUser.save();
+
+    transporter.sendMail({
+      to: email,
+      subject: "Verify your Email - OTP for Signup",
+      text: `Your OTP for email verification is ${otp}. It is valid for 15 minutes.`,
+    });
+
+    res.status(200).json({ message: "OTP sent to email" });
+  } catch (err) {
+    console.error("Error sending OTP:", err);
+    res.status(500).json({ message: "Failed to send OTP" });
   }
 });
+
+app.post('/verify-otp', async (req, res) => {
+  const { email, otp, firstName, lastName, phone, password } = req.body;
+
+  try {
+    // Find the user with the given email and OTP
+    const user = await User.findOne({ email, otp });
+
+    if (!user) {
+      return res.status(400).json({ message: "Invalid OTP" });
+    }
+
+    // Check if OTP has expired
+    if (user.otpExpiry < Date.now()) {
+      return res.status(400).json({ message: "OTP expired" });
+    }
+
+    // Hash password and save final user data
+    const hashedPassword = await bcrypt.hash(password, 10);
+    user.firstName = firstName;
+    user.lastName = lastName;
+    user.phone = phone;
+    user.password = hashedPassword;
+    user.otp = undefined; // Clear OTP after verification
+    user.otpExpiry = undefined;
+
+    await user.save();
+
+    res.status(201).json({ message: "Signup successful" });
+  } catch (err) {
+    console.error("Error verifying OTP:", err);
+    res.status(500).json({ message: "Failed to verify OTP" });
+  }
+});
+
 //------------------------------------------------------------------------------------
 
 
@@ -414,6 +454,37 @@ app.delete('/events/:id', async (req, res) => {
 app.get('/events', async (req, res) => {
   try {
     const events = await Event.find(); // Fetch all events from the database
+    res.json(events); // Send the events as JSON
+  } catch (err) {
+    console.error('Error fetching events:', err);
+    res.status(500).json({ message: 'Error fetching events' });
+  }
+});
+
+//------------------------------------------------------------------------------------
+//API Endpoint for Newsletter
+app.post('/subscribe-newsletter', async (req, res) => {
+  try {
+    const { emailId, date } = req.body;
+
+    const existingEmail = await NewsLetter.findOne({ emailId });
+    if (existingEmail) {
+      return res.status(400).json({ message: "You are already under our subscription" });
+    }
+
+    const model = new NewsLetter({ emailId, date });
+    await model.save();
+    res.status(201).json({ message: "Thank you for subscribing!", model });
+  } catch (err) {
+    console.error('Error subscribing to newsletter:', err);
+    res.status(500).json({ message: 'Error subscribing to the newsletter' });
+  }
+});
+
+
+app.get('/newsletter-email-list', async (req, res) => {
+  try {
+    const events = await NewsLetter.find(); // Fetch all events from the database
     res.json(events); // Send the events as JSON
   } catch (err) {
     console.error('Error fetching events:', err);

@@ -1,13 +1,11 @@
-/* General Styling */
 body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
-    background-color: #f9f9f9; /* Light background for contrast */
-    color: #333; /* Default text color */
+    background-color: #f9f9f9;
+    color: #333;
 }
 
-/* Container Styling */
 .container {
     padding: 0;
     margin: 0;
@@ -15,52 +13,47 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh; /* Full viewport height */
-    width: 100%; /* Full viewport width */
+    height: 100vh;
+    width: 100%;
 }
 
-/* Main Content Styling */
 .main-content {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
-    height: 100%; /* Ensures the calendar takes full height */
+    height: 100%;
     padding: 20px 0;
 }
 
-/* Card Styling */
 .about-us-card {
     width: 95%;
-    height: 90%; /* Take most of the viewport height */
-    max-width: 1200px; /* Set a max width for larger screens */
-    background: rgba(255, 255, 255, 0.9); /* Slightly transparent white */
+    height: 90%;
+    max-width: 1200px;
+    background: rgba(255, 255, 255, 0.9);
     border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Shadow for depth */
-    overflow: hidden; /* Prevent content overflow */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 20px;
 }
 
-/* Title Styling */
 .about-us-card h1 {
     font-size: 2.5em;
-    color: #ffa726; /* Vibrant orange matching the theme */
+    color: #ffa726;
     margin-bottom: 20px;
     text-transform: uppercase;
     letter-spacing: 1px;
     text-align: center;
 }
 
-/* Calendar Styling */
 .fc {
-    width: 100%; /* Full width of the parent */
-    height: 100%; /* Full height of the parent */
+    width: 100%;
+    height: 100%;
 }
 
-/* Calendar Toolbar Styling */
 .fc-toolbar {
     display: flex;
     justify-content: space-between;
@@ -70,10 +63,9 @@ body {
 .fc-toolbar-title {
     font-size: 1.5em;
     font-weight: bold;
-    color: #333; /* Darker text for contrast */
+    color: #333;
 }
 
-/* Calendar Buttons Styling */
 .fc-button {
     background: #ffa726;
     color: #fff;
@@ -86,55 +78,51 @@ body {
 }
 
 .fc-button:hover {
-    background: #e09100; /* Slightly darker shade on hover */
+    background: #e09100;
 }
 
-
-/* FullCalendar Event Styles */
 .fc-event {
-    background-color: #ffa726 !important; /* Consistent orange background */
-    color: #fff !important; /* White text for better contrast */
-    border: none !important; /* Remove default border */
-    border-radius: 4px; /* Rounded edges */
+    background-color: #ffa726 !important;
+    color: #fff !important; 
+    border: none !important;
+    border-radius: 4px;
     transition: background-color 0.3s ease, color 0.3s ease;
-    box-shadow: none; /* Remove any shadow */
+    box-shadow: none;
 }
 
 .fc-event:hover {
-    background-color: #e09100 !important; /* Slightly darker orange for hover effect */
-    color: #fff !important; /* Ensure text remains white */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add subtle hover effect */
+    background-color: #e09100 !important;
+    color: #fff !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .fc-list-item:hover {
-    background-color: #e09100 !important; /* Fix white background issue */
-    color: #fff !important; /* Ensure text remains visible */
-    border: none !important; /* Prevent any borders */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add consistent shadow */
+    background-color: #e09100 !important;
+    color: #fff !important;
+    border: none !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .fc-list-event-dot {
-    background-color: #fff; /* Keep the dot visible against darker hover backgrounds */
-    border: 2px solid #ffa726 !important; /* Dot matches theme */
+    background-color: #fff;
+    border: 2px solid #ffa726 !important;
 }
 
 .fc-list-item-title {
     font-weight: bold;
-    color: #333 !important; /* Text remains readable */
-    text-transform: capitalize; /* Optional: Make event titles look neat */
+    color: #333 !important;
+    text-transform: capitalize;
 }
 
 .fc-list-item:hover .fc-list-event-dot {
-    background-color: #e09100; /* Change dot color on hover */
-    border-color: #fff; /* Ensure it matches text for contrast */
+    background-color: #e09100;
+    border-color: #fff;
 }
 
-/* Calendar Week Numbers */
 .fc .fc-daygrid-week-number {
-    color: #777; /* Subtle gray for week numbers */
+    color: #777;
 }
 
-/* Calendar Note Styling */
 .calendar-note {
     margin-top: 20px;
     font-size: 1em;
@@ -142,7 +130,6 @@ body {
     text-align: center;
 }
 
-/* Modal Styling (If you have an EventModal) */
 .modal {
     position: fixed;
     top: 50%;
