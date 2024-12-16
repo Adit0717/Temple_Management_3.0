@@ -23,10 +23,14 @@ const Events = () => {
       const response = await fetch('http://localhost:3001/events');
       if (response.ok) {
         const data = await response.json();
+  
+        // Adjust start date to ensure FullCalendar renders it as UTC
         setEvents(
           data.map((event) => ({
-            ...event,
-            id: event._id, // Map _id to id for FullCalendar compatibility
+            id: event._id,
+            title: event.title,
+            start: new Date(event.start).toISOString().split('T')[0] + 'T00:00:00Z',
+            allDay: true, // Ensure the event is treated as full-day
           }))
         );
       } else {
@@ -36,22 +40,25 @@ const Events = () => {
       console.error('Error fetching events:', err);
     }
   };
+  
+  
 
   const handleEventClick = (clickInfo) => {
     setSelectedEvent({
       id: clickInfo.event.extendedProps._id,
       title: clickInfo.event.title,
-      start: clickInfo.event.start ? new Date(clickInfo.event.start).toISOString() : '', // Ensure ISO string
+      start: clickInfo.event.start
+        ? new Date(clickInfo.event.start).toISOString().split('T')[0] + 'T00:00:00Z'
+        : '',
       allDay: clickInfo.event.allDay,
     });
     setModalOpen(true);
   };
-  
 
   const handleDateClick = (arg) => {
     setSelectedEvent({
       title: '',
-      start: arg.dateStr,
+      start: new Date(arg.dateStr).toISOString().split('T')[0] + 'T00:00:00Z', // Adjust to UTC
       allDay: arg.allDay,
     });
     setModalOpen(true);
@@ -65,7 +72,10 @@ const Events = () => {
         {
           method: method,
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(eventData),
+          body: JSON.stringify({
+            ...eventData,
+            start: new Date(eventData.start).toISOString().split('T')[0] + 'T00:00:00Z', // Ensure UTC before saving
+          }),
         }
       );
       if (response.ok) {
@@ -104,7 +114,6 @@ const Events = () => {
                 center: 'title',
                 right: 'dayGridMonth,timeGridWeek,timeGridDay,listMonth',
               }}
-              
               buttonText={{
                 today: 'Today',
                 month: 'Month',
@@ -112,9 +121,8 @@ const Events = () => {
                 day: 'Day',
                 list: 'List'
               }}
-              
               selectable={true}
-              timeZone="local"
+              timeZone="UTC"
               businessHours={true}
               weekNumbers={true}
               events={events}

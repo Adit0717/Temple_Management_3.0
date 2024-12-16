@@ -21,28 +21,26 @@ const PORT = process.env.PORT || 3001;
 
 const dbURI = 'mongodb+srv://testAdmin:8JLL29AgGNOZAyFd@templemanagement.lcpzd.mongodb.net/?retryWrites=true&w=majority&appName=TempleManagement';
 
-// Connect MongoDB
 mongoose.connect(dbURI);
 
 app.use(bodyParser.json());
 
-// Set up multer for file storage in memory
 const upload = multer({
   storage: multer.memoryStorage()
 });
 
 app.use(session({
-  secret: 'Team2',           // This is a secret key used to sign the session ID cookie.
-  resave: false,             // Forces the session to be saved back to the session store, even if the session was never modified during the request.
-  saveUninitialized: true,   // Forces a session that is "uninitialized" to be saved to the store.
-  cookie: { secure: false }  // True is recommended if your site uses HTTPS. Set to false otherwise.
+  secret: 'Team2',           
+  resave: false,             
+  saveUninitialized: true,   
+  cookie: { secure: false } 
 }));
 
 
 //Enable Cors
 const corsOptions = {
-  origin: 'http://localhost:3000', // or use true to allow all origins
-  credentials: true,               // to support credentials like cookies
+  origin: 'http://localhost:3000',
+  credentials: true,              
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   allowedHeaders: 'Content-Type,Authorization'
 };
@@ -66,17 +64,14 @@ app.post('/generate-otp', async (req, res) => {
   const { email } = req.body;
 
   try {
-    // Check if email already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ message: "Email already registered" });
     }
 
-    // Generate OTP and expiry time
     const otp = Math.floor(10000 + Math.random() * 90000).toString();
-    const otpExpiry = Date.now() + 15 * 60 * 1000; // Valid for 15 minutes
+    const otpExpiry = Date.now() + 15 * 60 * 1000;
 
-    // Save OTP and expiry to a temporary user object
     const newUser = new User({
       email,
       otp,
@@ -101,26 +96,23 @@ app.post('/generate-otp', async (req, res) => {
 app.post('/verify-otp', async (req, res) => {
   const { email, otp, firstName, lastName, phone, password } = req.body;
 
-  try {
-    // Find the user with the given email and OTP
+  try {    
     const user = await User.findOne({ email, otp });
 
     if (!user) {
       return res.status(400).json({ message: "Invalid OTP" });
     }
-
-    // Check if OTP has expired
+    
     if (user.otpExpiry < Date.now()) {
       return res.status(400).json({ message: "OTP expired" });
     }
-
-    // Hash password and save final user data
+    
     const hashedPassword = await bcrypt.hash(password, 10);
     user.firstName = firstName;
     user.lastName = lastName;
     user.phone = phone;
     user.password = hashedPassword;
-    user.otp = undefined; // Clear OTP after verification
+    user.otp = undefined;
     user.otpExpiry = undefined;
 
     await user.save();
@@ -140,11 +132,9 @@ app.post('/sign-up', async (req, res) => {
     const { firstName, lastName, email, phone, password } = req.body;
     const empId = Math.floor(10000 + Math.random() * 90000).toString();
   
-    try {
-      // Hash password
+    try {      
       const hashedPassword = await bcrypt.hash(password, 10);
-  
-      // Create new user with hashed password
+        
       const newUser = new User({
         firstName,
         lastName,
@@ -154,8 +144,7 @@ app.post('/sign-up', async (req, res) => {
         role : 'Devotee',
         empId
       });
-  
-      // Save user to database
+        
       const savedUser = await newUser.save();
       res.status(201).json(savedUser);
     } catch (err) {
@@ -248,8 +237,7 @@ app.post('/create-priest', async (req, res) => {
       role : 'Priest',
       empId
     });
-
-    // Save user to database
+    
     const savedUser = await newUser.save();
     res.status(201).json(savedUser);
   } catch (err) {
@@ -371,15 +359,12 @@ app.delete('/announcements/:id', async (req, res) => {
 //API endpoints related to Services
 app.use(express.urlencoded({ extended: true }));
 
-app.post('/add-service', upload.single('serviceImage'), async (req, res) => {
-  const { title, alt, description, category } = req.body;
-  const serviceImage = req.file ? `data:image/jpeg;base64,${req.file.buffer.toString('base64')}` : null;
+app.post('/add-service', async (req, res) => {
+  const { title, description, category } = req.body;
 
   try {
       const newService = new Service({
-          title,
-          serviceImage,
-          alt,
+          title,                  
           description,
           category
       });
@@ -391,14 +376,11 @@ app.post('/add-service', upload.single('serviceImage'), async (req, res) => {
   }
 });
 
-app.put('/services/:id',upload.single('serviceImage'), async (req, res) => {
-  const { title, alt, description, category } = req.body;
-  const serviceImage = req.file ? `data:image/jpeg;base64,${req.file.buffer.toString('base64')}` : null;
+app.put('/services/:id', async (req, res) => {
+  const { title, description, category } = req.body;
   try {
     const updatedService = await Service.findByIdAndUpdate(req.params.id, {
-      title: title,
-      serviceImage: serviceImage,
-      alt: alt,
+      title: title,          
       description: description,
     }, { new: true });
     res.json(updatedService);
@@ -436,15 +418,43 @@ app.delete('/services/:id', async (req, res) => {
 //------------------------------------------------------------------------------------
 //API Endpoints related to Events
 app.post('/events', async (req, res) => {
-  const event = new Event(req.body);
-  await event.save();
-  res.status(201).json(event);
+  try {
+    const { title, start, allDay } = req.body;
+
+    // Convert start to ensure UTC midnight for all-day events
+    const utcStartDate = allDay
+      ? new Date(new Date(start).setUTCHours(0, 0, 0, 0)).toISOString()
+      : new Date(start).toISOString();
+
+    const event = new Event({
+      title,
+      start: utcStartDate,
+      allDay: allDay || false,
+    });
+    await event.save();
+    res.status(201).json(event);
+  } catch (error) {
+    console.error("Error saving event:", error);
+    res.status(500).json({ message: "Error saving event" });
+  }
 });
 
-app.put('/events/:id', async (req, res) => {
-  const event = await Event.findByIdAndUpdate(req.params.id, req.body, { new: true });
-  res.json(event);
+
+app.get('/events', async (req, res) => {
+  try {
+    const events = await Event.find();
+    res.json(
+      events.map((event) => ({
+        ...event.toObject(),
+        start: new Date(event.start).toISOString(), // Ensure UTC format
+      }))
+    );
+  } catch (err) {
+    console.error('Error fetching events:', err);
+    res.status(500).json({ message: 'Error fetching events' });
+  }
 });
+
 
 app.delete('/events/:id', async (req, res) => {
   await Event.findByIdAndDelete(req.params.id);
@@ -453,8 +463,8 @@ app.delete('/events/:id', async (req, res) => {
 
 app.get('/events', async (req, res) => {
   try {
-    const events = await Event.find(); // Fetch all events from the database
-    res.json(events); // Send the events as JSON
+    const events = await Event.find();
+    res.json(events);
   } catch (err) {
     console.error('Error fetching events:', err);
     res.status(500).json({ message: 'Error fetching events' });
@@ -484,8 +494,8 @@ app.post('/subscribe-newsletter', async (req, res) => {
 
 app.get('/newsletter-email-list', async (req, res) => {
   try {
-    const events = await NewsLetter.find(); // Fetch all events from the database
-    res.json(events); // Send the events as JSON
+    const events = await NewsLetter.find();
+    res.json(events);
   } catch (err) {
     console.error('Error fetching events:', err);
     res.status(500).json({ message: 'Error fetching events' });

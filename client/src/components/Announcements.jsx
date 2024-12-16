@@ -25,11 +25,9 @@ const Announcements = ({ role }) => {
       fetchAnnouncements();
   }, []);
 
-  // Handle form submission (add/edit)
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (editId) {
-      // Update an announcement
       try {
         const response = await fetch(`http://localhost:3001/announcements/${editId}`, {
           method: "PUT",
@@ -40,14 +38,13 @@ const Announcements = ({ role }) => {
           setIsModalOpen(false);
           setEditId(null);
           setFormData({ title: "", description: "" });
-          fetchAnnouncements(); // Fetch updated announcements
+          fetchAnnouncements();
 
         }
       } catch (error) {
         console.error("Error updating announcement:", error);
       }
-    } else {
-      // Add a new announcement
+    } else {      
       try {
         const response = await fetch("http://localhost:3001/add-announcement", {
           method: "POST",
@@ -65,7 +62,6 @@ const Announcements = ({ role }) => {
     }
   };
 
-  // Handle delete
   const handleDelete = async (id) => {
     try {
       const response = await fetch(`http://localhost:3001/announcements/${id}`, {
@@ -79,7 +75,6 @@ const Announcements = ({ role }) => {
     }
   };
 
-  // Open modal for adding/editing
   const openModal = (announcement = null) => {
     if (announcement) {
       setFormData({ title: announcement.title, description: announcement.description });
@@ -91,7 +86,6 @@ const Announcements = ({ role }) => {
     setIsModalOpen(true);
   };
 
-  // Handle search
   const handleSearch = (query) => {
     setSearchQuery(query);
     const lowercasedQuery = query.toLowerCase();

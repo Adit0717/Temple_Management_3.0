@@ -12,7 +12,7 @@ const SignupPage = () => {
   const [validationErrors, setValidationErrors] = useState({});
   const [showOTPInput, setShowOTPInput] = useState(false);
   const [otpValue, setOTPValue] = useState("");
-  const [otpSent, setOTPSent] = useState(false); // Tracks OTP sent status
+  const [otpSent, setOTPSent] = useState(false);
 
   const navigate = useNavigate();
 
@@ -30,23 +30,21 @@ const SignupPage = () => {
 
   useEffect(() => {
     if (error) {
-      const timeout = setTimeout(() => setError(""), 5000); // Clear error after 5 seconds
-      return () => clearTimeout(timeout); // Cleanup the timeout
+      const timeout = setTimeout(() => setError(""), 5000);
+      return () => clearTimeout(timeout);
     }
-  }, [error]); // Run when `error` changes
+  }, [error]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormValues({ ...formValues, [name]: value });
 
-    // Clear validation error for the specific field
     setValidationErrors((prevErrors) => {
       const updatedErrors = { ...prevErrors };
       delete updatedErrors[name];
       return updatedErrors;
     });
 
-    // Reset OTP state if email changes
     if (name === "email") {
       setOTPSent(false);
       setShowOTPInput(false);
@@ -78,10 +76,9 @@ const SignupPage = () => {
     }
     return errors;
   };
-
-  // Handle OTP Generation
+  
   const handleGenerateOTP = async () => {
-    const errors = validateForm(); // Initialize errors object
+    const errors = validateForm();
     if (!formValues.email.trim()) {
       errors.email = "Email is required to generate OTP";
     } else if (!formValues.email.includes("@")) {
@@ -113,7 +110,6 @@ const SignupPage = () => {
     }
   };
 
-  // Handle OTP Verification
   const handleVerifyOTP = async () => {
     if (!otpValue.trim()) {
       setError("Please enter the OTP to verify.");

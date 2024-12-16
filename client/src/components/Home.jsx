@@ -6,7 +6,6 @@ import Announcements from "./Announcements";
 const HomePage = () => {
   const [announcements, setAnnouncements] = useState([]);
 
-  // Fetch all announcements from the backend
   useEffect(() => {
     const fetchAnnouncements = async () => {
       try {

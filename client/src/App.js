@@ -9,6 +9,9 @@ import Mission from './components/Mission'
 import ContactUs from './components/ContactUs';
 import AboutPriest from './components/AboutPriest';
 import Events from './components/Events';
+import Donations from './components/Dontations';
+import Payment from './components/Payment';
+import Services from './components/Services';
 
 function App() {
   
@@ -26,6 +29,9 @@ function App() {
           <Route path='/about-us/contact' element={<ContactUs />} />
           <Route path='/about-us/priest' element={<AboutPriest />} />
           <Route path='/events' element={<Events />} />
+          <Route path='/donations' element={<Donations />} />
+          <Route path='/payment' element={<Payment />} />
+          <Route path='/services' element={<Services />} />
         </Routes>
       </Router>
     </div>
