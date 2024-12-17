@@ -216,3 +216,18 @@ body {
         font-size: 0.9em;
     }
 }
+
+.modal-delete-button {
+    background: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .modal-delete-button:hover {
+    background: #cc0000;
+  }
+  

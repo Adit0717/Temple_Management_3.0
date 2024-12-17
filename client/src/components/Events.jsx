@@ -23,14 +23,13 @@ const Events = () => {
       const response = await fetch('http://localhost:3001/events');
       if (response.ok) {
         const data = await response.json();
-  
-        // Adjust start date to ensure FullCalendar renders it as UTC
+          
         setEvents(
           data.map((event) => ({
             id: event._id,
             title: event.title,
             start: new Date(event.start).toISOString().split('T')[0] + 'T00:00:00Z',
-            allDay: true, // Ensure the event is treated as full-day
+            allDay: true,
           }))
         );
       } else {
@@ -41,11 +40,9 @@ const Events = () => {
     }
   };
   
-  
-
   const handleEventClick = (clickInfo) => {
     setSelectedEvent({
-      id: clickInfo.event.extendedProps._id,
+      id: clickInfo.event.id,
       title: clickInfo.event.title,
       start: clickInfo.event.start
         ? new Date(clickInfo.event.start).toISOString().split('T')[0] + 'T00:00:00Z'
@@ -58,7 +55,7 @@ const Events = () => {
   const handleDateClick = (arg) => {
     setSelectedEvent({
       title: '',
-      start: new Date(arg.dateStr).toISOString().split('T')[0] + 'T00:00:00Z', // Adjust to UTC
+      start: new Date(arg.dateStr).toISOString().split('T')[0] + 'T00:00:00Z', 
       allDay: arg.allDay,
     });
     setModalOpen(true);
@@ -74,7 +71,7 @@ const Events = () => {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             ...eventData,
-            start: new Date(eventData.start).toISOString().split('T')[0] + 'T00:00:00Z', // Ensure UTC before saving
+            start: new Date(eventData.start).toISOString().split('T')[0] + 'T00:00:00Z', 
           }),
         }
       );
@@ -93,6 +90,8 @@ const Events = () => {
       });
       if (response.ok) {
         fetchEvents();
+        setModalOpen(false);
+        setSelectedEvent(null);
       }
     } catch (error) {
       console.error(error);

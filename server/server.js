@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
@@ -18,8 +19,7 @@ const multer = require('multer');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
-
-const dbURI = 'mongodb+srv://testAdmin:8JLL29AgGNOZAyFd@templemanagement.lcpzd.mongodb.net/?retryWrites=true&w=majority&appName=TempleManagement';
+const dbURI = process.env.MONGO_URI;
 
 mongoose.connect(dbURI);
 
@@ -51,7 +51,6 @@ app.use(cors(corsOptions));
 //API Endpoint to receive OTP
 //OTP sender config
 
-require('dotenv').config();
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
