@@ -12,6 +12,11 @@ import Events from './components/Events';
 import Donations from './components/Dontations';
 import Payment from './components/Payment';
 import Services from './components/Services';
+import DevoteeAppointment from './components/DevoteeAppointments';
+import AdministratorAppointments from './components/AdminView';
+
+//<Route path='/view-appointments' element={<PriestView />} />
+
 
 function App() {
   
@@ -32,6 +37,8 @@ function App() {
           <Route path='/donations' element={<Donations />} />
           <Route path='/payment' element={<Payment />} />
           <Route path='/services' element={<Services />} />
+          <Route path='/book-priest' element={<DevoteeAppointment />} />          
+          <Route path='/view-all-appointments' element={<AdministratorAppointments />} />
         </Routes>
       </Router>
     </div>

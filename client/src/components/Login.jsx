@@ -55,6 +55,8 @@ const LoginPage = () => {
           
           localStorage.setItem("role", role);
           localStorage.setItem("token", data.token);
+          localStorage.setItem("userName", data.userName);
+          localStorage.setItem("email", email);
           
           navigate("/dashboard");
         }
