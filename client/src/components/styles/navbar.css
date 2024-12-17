@@ -8,7 +8,7 @@
   color: white;
   font-family: Arial, sans-serif;
   height: 70px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Added shadow for better visual appeal */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 /* Logo */
@@ -64,11 +64,11 @@
 
 /* Logout Button */
 .logout-button {
-  background-color: #ffa726; /* Consistent with the Ram Mandir theme */
+  background-color: #ffa726;
   color: white;
   border: none;
   padding: 8px 20px;
-  margin-left: 2px; /* Added spacing */
+  margin-left: 2px;
   border-radius: 6px;
   cursor: pointer;
   font-size: 1.1em;
@@ -77,8 +77,8 @@
 }
 
 .logout-button:hover {
-  background-color: #e09100; /* Darker orange for hover */
-  transform: scale(1.05); /* Slight enlargement */
+  background-color: #e09100;
+  transform: scale(1.05);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
@@ -168,7 +168,7 @@
   .logout-button {
     margin-left: 0;
     margin-top: 10px;
-    width: 100%; /* Full-width button on smaller screens */
+    width: 100%;
     text-align: center;
   }
 }
