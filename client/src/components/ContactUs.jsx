@@ -20,7 +20,7 @@ const ContactUs = () => {
   
     return (
         <div>
-          <Navbar />
+        
           <div className="contact-us-section">
             <h1><u>Contact Us</u></h1>
             <div className="contact-us-card">

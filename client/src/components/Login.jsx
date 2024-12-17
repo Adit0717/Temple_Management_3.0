@@ -5,12 +5,11 @@ import { useNavigate } from "react-router-dom";
 import Navbar from "./NavBar";
 import Footer from "./Footer";
 
-
 const LoginPage = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
-    const [role, setRole] = useState("Devotee");
+    const [role, setRole] = useState("devotee");
     const [error, setError] = useState("");
   
     const navigate = useNavigate();
@@ -53,12 +52,13 @@ const LoginPage = () => {
           const data = await response.json();
           console.log("Login successful:", data);
           
-          localStorage.setItem("role", role);
+          localStorage.setItem("role", data.user.role);
           localStorage.setItem("token", data.token);
-          localStorage.setItem("userName", data.userName);
-          localStorage.setItem("email", email);
+          localStorage.setItem("userName", (data.user.firstName + ' ' + data.user.lastName));
+          localStorage.setItem("email", data.user.email);
           
-          navigate("/dashboard");
+          navigate("/home");
+          window.location.reload();
         }
       } catch (error) {
         console.error("Error during login:", error);        
@@ -70,7 +70,7 @@ const LoginPage = () => {
   
     return (
       <div className="login-page">
-        <Navbar />
+        
         <div className="login-content">
           <div className="login-left">
             <img
@@ -125,9 +125,9 @@ const LoginPage = () => {
                 onChange={(e) => setRole(e.target.value)}
                 className="role-dropdown"
               >
-                <option value="Administrator">Administrator</option>
-                <option value="Devotee">Devotee</option>
-                <option value="Priest">Priest</option>
+                <option value="administrator">Administrator</option>
+                <option value="devotee">Devotee</option>
+                <option value="priest">Priest</option>
               </select>
   
               {error && <p className="error-message">{error}</p>}

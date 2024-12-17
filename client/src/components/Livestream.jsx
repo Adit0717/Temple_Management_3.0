@@ -16,7 +16,7 @@ const LiveStream = () => {
 
     return (
         <div>
-            <Navbar />
+        
             <div className="live-stream-section">
                 <div className="live-stream-card">
                     <h1>Live Stream Updates!</h1>

@@ -5,7 +5,7 @@ import './styles/aboutPriest.css'
 const AboutPriest = () => {
     return (
         <div>
-           <Navbar />           
+             
                 <div className="priest-section">
                     <h1><u>Employed Priests</u></h1> 
                     <div className="priest-card">
