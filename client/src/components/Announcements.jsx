@@ -3,13 +3,14 @@ import "./styles/announcements.css";
 import Newsletter from "./Newsletter";
 import logo from '../assets/google-maps-hd-logo.png'
 
-const Announcements = ({ role }) => {
+const Announcements = () => {
   const [announcements, setAnnouncements] = useState([]);
   const [filteredAnnouncements, setFilteredAnnouncements] = useState([]);
   const [formData, setFormData] = useState({ title: "", description: "" });
   const [editId, setEditId] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [role, setRole] = useState(localStorage.getItem("role"));
 
   const fetchAnnouncements = async () => {
     try {

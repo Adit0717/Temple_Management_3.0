@@ -74,7 +74,7 @@ const HomePage = () => {
 
   return (
     <div>
-      <Navbar />
+  
       <Announcements
         announcements={announcements}
         onAdd={handleAdd}

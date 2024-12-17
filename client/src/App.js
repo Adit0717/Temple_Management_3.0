@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import './App.css';
+import { useState, useEffect } from "react";
 import LoginPage from './components/Login';
 import SingupPage from './components/Signup';
 import HomePage from './components/Home';
@@ -15,14 +16,38 @@ import Services from './components/Services';
 import DevoteeAppointment from './components/DevoteeAppointments';
 import AdministratorAppointments from './components/AdminView';
 
+// Navbar Components
+import Navbar from './components/NavBar';
+import NavbarDevotee from './components/NavBarDevotee'
+import NavbarAdmin from "./components/NavBarAdmin";
+
 //<Route path='/view-appointments' element={<PriestView />} />
 
 
 function App() {
+	const [role, setRole] = useState(""); // Default role is 'guest'
+
+  useEffect(() => {
+    const storedRole = localStorage.getItem("role");
+    setRole(storedRole); // Fetch role from localStorage
+  }, []);
+
+  // Conditionally render Navbar based on role
+  const renderNavbar = () => {
+    switch (role) {
+      case "devotee":
+        return <NavbarDevotee />;
+      case "administrator":
+        return <NavbarAdmin />;
+      default:
+        return <Navbar />;
+    }
+  };
   
   return (
     <div className='App'>
       <Router>
+        {renderNavbar()}  
         <Routes>
           <Route path='/' element={<Navigate to='/home' />}/>
           <Route path='/home' element={<HomePage />}/>
@@ -37,7 +62,7 @@ function App() {
           <Route path='/donations' element={<Donations />} />
           <Route path='/payment' element={<Payment />} />
           <Route path='/services' element={<Services />} />
-          <Route path='/book-priest' element={<DevoteeAppointment />} />          
+          <Route path='/book-appointment' element={<DevoteeAppointment />} />          
           <Route path='/view-all-appointments' element={<AdministratorAppointments />} />
         </Routes>
       </Router>

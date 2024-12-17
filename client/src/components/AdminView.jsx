@@ -60,7 +60,7 @@ const AdminAppointments = () => {
 
   return (
     <div>
-      <Navbar />
+    
       <div className="appointments-container">
         <h2 className="appointments-header">Administrator: Manage Appointments</h2>
         <table className="appointments-table">

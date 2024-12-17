@@ -75,8 +75,7 @@ app.post('/generate-otp', async (req, res) => {
     const newUser = new User({
       email,
       otp,
-      otpExpiry,
-      role: "Devotee",
+      otpExpiry
     });
     await newUser.save();
 
@@ -94,7 +93,7 @@ app.post('/generate-otp', async (req, res) => {
 });
 
 app.post('/verify-otp', async (req, res) => {
-  const { email, otp, firstName, lastName, phone, password } = req.body;
+  const { email, otp, firstName, lastName, phone, password, role } = req.body;
 
   try {    
     const user = await User.findOne({ email, otp });
@@ -112,6 +111,7 @@ app.post('/verify-otp', async (req, res) => {
     user.lastName = lastName;
     user.phone = phone;
     user.password = hashedPassword;
+    user.role = role;
     user.otp = undefined;
     user.otpExpiry = undefined;
 

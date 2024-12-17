@@ -13,8 +13,8 @@ const DevoteeAppointments = () => {
   const [time, setTime] = useState("");
   const [info, setInfo] = useState("");
   const [message, setMessage] = useState("");
-  //const email = localStorage.getItem("email");
-  const email = "krisa04@pfw.edu";
+  const email = localStorage.getItem("email");
+  //const email = "krisa04@pfw.edu";
 
   useEffect(() => {
     fetchPriests();
@@ -74,7 +74,7 @@ const DevoteeAppointments = () => {
 
   return (
     <div>
-      <Navbar />
+      
       <div className="appointments-container">
         <h2 className="appointments-header">Book an Appointment with a priest</h2>
         <div className="appointments-content">

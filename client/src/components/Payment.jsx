@@ -108,7 +108,7 @@ const Payment = () => {
 
   return (
     <div className="payment-page">
-      <Navbar />
+      
       <div className="payment-container">
         <h2 className="payment-header">Donate to Ram Mandir</h2>
 

@@ -7,7 +7,7 @@ import Footer from "./Footer";
 
 const SignupPage = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [role, setRole] = useState("Devotee");
+  const [role, setRole] = useState("devotee");
   const [error, setError] = useState("");
   const [validationErrors, setValidationErrors] = useState({});
   const [showOTPInput, setShowOTPInput] = useState(false);
@@ -142,7 +142,7 @@ const SignupPage = () => {
 
   return (
     <div className="signup-page">
-      <Navbar />
+    
       <div className="signup-content">
         <div className="signup-left">
           <img src={templeImage} alt="Temple" className="signup-Image" />
@@ -208,10 +208,10 @@ const SignupPage = () => {
                     name="role"
                     onChange={(e) => setRole(e.target.value)}
                     className="role-dropdown"
-                >
-                    <option value="Administrator">Administrator</option>
-                    <option value="Devotee">Devotee</option>
-                    <option value="Priest">Priest</option>
+                >                    
+                    <option value="devotee">Devotee</option>
+                    <option value="administrator">Administrator</option>
+                    <option value="priest">Priest</option>   
                 </select>
 
             {validationErrors.password && <p className="error-message">{validationErrors.password}</p>}

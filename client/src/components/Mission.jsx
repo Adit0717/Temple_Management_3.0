@@ -4,7 +4,7 @@ import './styles/mission.css'
 const Mission = () => {
     return (
         <div>
-           <Navbar />
+        
            <div className="mission-section">
                 <h2 className="section-title">Our Mission</h2>
                 <p className="mission-content">

@@ -101,7 +101,7 @@ const Events = () => {
 
   return (
     <div>
-      <Navbar />
+      
       <div className="container">
         <main className="main-content">
           <div className="about-us-card">
