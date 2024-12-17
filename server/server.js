@@ -246,7 +246,7 @@ app.post('/create-priest', async (req, res) => {
 });
 
 app.get('/get-priests', async (req, res) => {
-    const { role } = req.body;
+    const role  = 'priest';
     try {
       const users = await User.find({ role: role });
       res.json(users);
