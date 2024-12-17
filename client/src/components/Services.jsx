@@ -6,8 +6,8 @@ import Footer from "./Footer";
 
 const Services = () => {
   const [services, setServices] = useState([]);
-  const [userRole, setUserRole] = useState(localStorage.getItem("role"));
-  //const [userRole, setUserRole] = useState("administrator"); // For local testing
+  //const [userRole, setUserRole] = useState(localStorage.getItem("role"));
+  const [userRole, setUserRole] = useState("administrator"); // For local testing
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [editingEvent, setEditingEvent] = useState(null);

@@ -246,7 +246,7 @@ app.post('/create-priest', async (req, res) => {
   }
 });
 
-app.post('/get-priests', async (req, res) => {
+app.get('/get-priests', async (req, res) => {
     const { role } = req.body;
     try {
       const users = await User.find({ role: role });
@@ -261,8 +261,34 @@ app.post('/get-priests', async (req, res) => {
 //API Endpoints related to Appointments
 app.post('/book-appointment', async (req, res) => {
   try {
-    const newAppointment = new Appointment(req.body);
+    const { priestId, priest, date, time, information, userName, email } = req.body;
+    const newAppointment = new Appointment({
+      priestId,
+      priest,
+      date,
+      time,
+      information,
+      userName,
+      email,
+    });
     await newAppointment.save();
+
+    const mailOptions = {      
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: "Appointment Confirmation",
+      html: `
+        <h2>Appointment Confirmation</h2>
+        <p>Dear ${userName},</p>
+        <p>Your appointment has been successfully booked with <b>${newAppointment.priest}</b>.</p>
+        <p> Verify the following information.</p>
+        <p><b>Date: </b> ${new Date(date).toLocaleDateString()}</p>
+        <p><b>Time: </b> ${newAppointment.time}</p>
+        <p><b>Information to Priest: </b> ${newAppointment.information}</p>
+        <p>Thank you for choosing our services.</p>
+      `,
+    };
+    await transporter.sendMail(mailOptions);
     res.status(201).json(newAppointment);
   } catch (error) {
     res.status(500).send('Error inserting appointment: ' + error.message);
@@ -279,19 +305,41 @@ app.get('/get-appointments', async (req, res) => {
 });
 
 app.delete('/delete-appointment/:id', async (req, res) => {
-
   try {
     const { id } = req.params;
-    const appointment = await Appointment.findByIdAndDelete(id);
+    const appointment = await Appointment.findById(id);
+
     if (!appointment) {
       return res.status(404).send("Appointment not found.");
     }
-    res.status(200).send(`Appointment with id ${id} deleted successfully.`);
+
+    const { priest, date, time, information, userName, email } = appointment;
+    await Appointment.findByIdAndDelete(id);
+
+    const mailOptions = {
+      from: process.env.EMAIL_USER,
+      to: email,
+      subject: "Appointment Cancellation",
+      html: `
+        <h2>Appointment Cancelled</h2>
+        <p>Dear ${userName},</p>
+        <p>Your appointment has been <b>cancelled</b> with <b>${priest}</b>.</p>
+        <p><b>Date:</b> ${new Date(date).toLocaleDateString()}</p>
+        <p><b>Time:</b> ${time}</p>
+        <p><b>Information to Priest:</b> ${information}</p>
+        <p>We are sorry for any inconvenience caused. Thank you for choosing our services.</p>
+      `,
+    };
+
+    await transporter.sendMail(mailOptions);
+
+    res.status(200).send(`Appointment with id ${id} deleted successfully and confirmation email sent.`);
   } catch (error) {
-    console.error('Failed to delete the Appointment:', error);
-    res.status(500).send('Error deleting appointment from the database');
+    console.error("Failed to delete the Appointment:", error);
+    res.status(500).send("Error deleting appointment from the database");
   }
 });
+
 
 app.patch('/update-appointment/:id', async (req, res) => {
   const { status } = req.body;
