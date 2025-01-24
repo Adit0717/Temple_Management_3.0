@@ -1,0 +1,131 @@
+/* Donations Page Styling */
+
+.donations-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.donations-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #e57300;
+  font-weight: 700;
+}
+
+.donations-header h2 {
+  font-size: 2rem;
+  color: #e57300;
+}
+
+.npo-info {
+  text-align: center;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  color: #444;
+}
+
+.npo-info strong {
+  color: #000;
+}
+
+.donation-options {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 2rem;
+  gap: 2rem;
+}
+
+.donation-box {
+  flex: 1;
+  background: #fafafa;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 1.5rem;
+  text-align: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.donation-box:hover {
+  transform: translateY(-5px);
+}
+
+.donation-box h3 {
+  font-size: 1.2rem;
+  color: #e57300;
+  margin-bottom: 1rem;
+}
+
+.donation-box p {
+  color: #555;
+  margin-bottom: 1rem;
+}
+
+.donation-button {
+  background-color: #e57300;
+  color: #fff;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.donation-button:hover {
+  background-color: #c95d00;
+}
+
+.monthly-donation select {
+  width: 80%;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.cash-donations {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.cash-donations h3 {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  color: #e57300;
+}
+
+.cash-donations p {
+  font-size: 1rem;
+  color: #555;
+}
+
+.cash-donations a {
+  color: #e57300;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.cash-donations a:hover {
+  text-decoration: underline;
+}
+
+strong {
+  font-weight: 600;
+}
+
+em {
+  color: #888;
+  font-size: 0.9rem;
+}
+
+.donations-header strong{
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #db7005;
+  font-weight: 700;
+}

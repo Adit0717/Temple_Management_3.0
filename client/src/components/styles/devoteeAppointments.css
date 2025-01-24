@@ -1,0 +1,133 @@
+.appointments-container {
+  background-color: #fdf8e3;
+  padding: 30px;
+}
+
+.appointments-header {
+  text-align: center;
+  font-size: 2rem;
+  color: #f7941d;
+  margin-bottom: 20px;
+}
+
+.appointments-content {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.priest-info,
+.appointment-form {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 48%;
+}
+
+.priest-info h3,
+.appointment-form h3 {
+  color: #f7941d;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.priest-info ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.priest-info li {
+  margin-bottom: 10px;
+  color: #333;
+  font-size: 1rem;
+}
+
+.appointment-form label {
+  display: block;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.date-time-inputs {
+  display: flex;
+  gap: 10px;
+}
+
+.date-time-inputs input,
+.date-time-inputs select {
+  flex: 1;
+}
+
+.appointment-form input,
+.appointment-form select,
+.appointment-form textarea {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.book-button {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 10px;
+  width: 100%;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.book-button:hover {
+  background-color: #218838;
+}
+
+.status-message {
+  margin-top: 15px;
+  font-weight: bold;
+  text-align: center;
+  color: green;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  color: #333;
+  text-align: left;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+textarea {
+  resize: none;
+}
+
+.information-textarea {
+  height: 150px;
+  width: 100%;
+  resize: none;
+  font-size: 1rem;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}

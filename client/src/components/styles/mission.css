@@ -1,0 +1,41 @@
+.mission-section {
+    position: relative;
+    background: url('./rammandir_0.jpg') no-repeat center center/cover;
+    padding: 40px 20px;
+    color: #fff;
+    text-align: center;
+}
+
+.mission-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 1;
+}
+
+.mission-section h2,
+.mission-section p {
+    position: relative;
+    z-index: 2;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.section-title {
+    font-size: 2em;
+    color: #ffa726;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.mission-content {
+    font-size: 1.3em;
+    line-height: 1.8;
+    margin: 0 auto 30px;
+    max-width: 800px;
+    color: #e0e0e0;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+}
