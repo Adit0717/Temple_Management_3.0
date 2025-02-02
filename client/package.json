@@ -46,11 +46,7 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.2.0",
-<<<<<<< Updated upstream
-    "jest": "^27.5.1"
-=======
     "jest": "^27.5.1",
     "jest-environment-jsdom": "^29.7.0"
->>>>>>> Stashed changes
   }
 }
