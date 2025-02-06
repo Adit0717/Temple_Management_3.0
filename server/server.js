@@ -549,11 +549,12 @@ app.get('/newsletter-email-list', async (req, res) => {
   }
 });
 
-/*
+
 //Run the backend app in port mentioned in .env
+
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
-*/
 
-module.exports = app;
+
+//module.exports = app; //Run this for testing
