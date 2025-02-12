@@ -251,7 +251,7 @@ app.get('/get-priests', async (req, res) => {
       const users = await User.find({ role: role });
       res.json(users);
     } catch (error) {
-      console.error('Failed to fetch users:', error);
+      //console.error('Failed to fetch users:', error);
       res.status(500).send('Server error');
     }
   });
@@ -552,9 +552,10 @@ app.get('/newsletter-email-list', async (req, res) => {
 
 //Run the backend app in port mentioned in .env
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+
+ app.listen(PORT, () => {
+   console.log(`Server running on port ${PORT}`);
+ });
 
 
-//module.exports = app; //Run this for testing
+// module.exports = app; //Run this for testing
