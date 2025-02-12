@@ -497,7 +497,7 @@ app.get('/events', async (req, res) => {
       }))
     );
   } catch (err) {
-    console.error('Error fetching events:', err);
+    //console.error('Error fetching events:', err);
     res.status(500).json({ message: 'Error fetching events' });
   }
 });
