@@ -251,7 +251,7 @@ app.get('/get-priests', async (req, res) => {
       const users = await User.find({ role: role });
       res.json(users);
     } catch (error) {
-      console.error('Failed to fetch users:', error);
+      //console.error('Failed to fetch users:', error);
       res.status(500).send('Server error');
     }
   });
