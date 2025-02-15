@@ -1,23 +1,22 @@
 const request = require("supertest");
-const app = require("../server"); // Import your Express app
-const Service = require("../class-models/Service"); // Mocked Service model
+const app = require("../server"); 
+const Service = require("../class-models/Service"); 
 
-jest.mock("../class-models/Service"); // Mock the Service model
+jest.mock("../class-models/Service"); 
 
-// Fully suppress console.error during all tests
 let consoleErrorMock;
 
 beforeAll(() => {
-  consoleErrorMock = jest.spyOn(console, "error").mockImplementation(() => {}); // Mute error logs in tests
+  consoleErrorMock = jest.spyOn(console, "error").mockImplementation(() => {}); 
 });
 
 afterAll(() => {
-  consoleErrorMock.mockRestore(); // Restore original console.error after tests
+  consoleErrorMock.mockRestore(); 
 });
 
 describe("GET /services", () => {
   afterEach(() => {
-    jest.clearAllMocks(); // Clear mocks after each test
+    jest.clearAllMocks(); 
   });
 
   test("should return all temple services", async () => {
@@ -43,7 +42,7 @@ describe("GET /services", () => {
 
     expect(response.status).toBe(200);
     expect(response.body).toEqual(mockServices);
-    expect(Service.find).toHaveBeenCalledTimes(1); // Ensure Service.find() is called
+    expect(Service.find).toHaveBeenCalledTimes(1); 
   });
 
   test("should return an empty array if no services exist", async () => {
