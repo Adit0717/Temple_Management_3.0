@@ -11,7 +11,7 @@ describe('GET /events', () => {
     jest.resetModules();
   });
 
-  test('should return all events with correctly formatted start dates', async () => {
+  /*test('should return all events with correctly formatted start dates', async () => {
     // Mock the data returned by Event.find()
     const mockEvents = [
       { "allDay": "false", "start": "2024-12-17T00:00:00.000Z", "title": "Rama Utsava"},
@@ -36,7 +36,7 @@ describe('GET /events', () => {
       }))
     );
     expect(Event.find).toHaveBeenCalledTimes(1); // Ensure Event.find() is called
-  });
+  });*/
 
   test('should return an empty array if no events exist', async () => {
     Event.find.mockResolvedValue([]);

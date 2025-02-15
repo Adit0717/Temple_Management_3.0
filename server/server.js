@@ -86,7 +86,7 @@ app.post('/generate-otp', async (req, res) => {
 
     res.status(200).json({ message: "OTP sent to email" });
   } catch (err) {
-    console.error("Error sending OTP:", err);
+    //console.error("Error sending OTP:", err);
     res.status(500).json({ message: "Failed to send OTP" });
   }
 });
@@ -334,7 +334,7 @@ app.delete('/delete-appointment/:id', async (req, res) => {
 
     res.status(200).send(`Appointment with id ${id} deleted successfully and confirmation email sent.`);
   } catch (error) {
-    console.error("Failed to delete the Appointment:", error);
+    //console.error("Failed to delete the Appointment:", error);
     res.status(500).send("Error deleting appointment from the database");
   }
 });
@@ -369,8 +369,8 @@ app.post('/add-announcement', async (req, res) => {
   try {
 
     const newAnnouncement = new Announcement(req.body);
-    await newAnnouncement.save();
-    res.status(201).json(newAnnouncement);
+    const savedAnnouncement = await newAnnouncement.save();
+    res.status(201).json(savedAnnouncement);
   } catch (error) {
     console.log(error.message);
     res.status(500).send('Error adding announcement: ' + error.message);
