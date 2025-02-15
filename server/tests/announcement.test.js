@@ -46,3 +46,47 @@ describe('GET /announcements', () => {
     expect(Announcement.find).toHaveBeenCalledTimes(1); // Ensure Announcement.find() is called
   });
 });
+
+describe('POST /add-announcement', () => {
+  let mockAnnouncementData;
+
+  beforeEach(() => {
+    // Mock announcement data
+    mockAnnouncementData = {
+      title: 'New Event',
+      description: 'We are hosting a new event!'
+    };
+
+    // Clear all mocks before each test
+    jest.clearAllMocks();
+  });
+
+  it('should return 201 and create an announcement successfully', async () => {
+    // Mock the save() method to resolve successfully
+    Announcement.prototype.save.mockResolvedValue(mockAnnouncementData);
+
+    const response = await request(app)
+      .post('/add-announcement')
+      .send(mockAnnouncementData);
+
+    // Assertions
+    expect(response.status).toBe(201);
+    expect(response.body).toEqual(mockAnnouncementData);
+    expect(Announcement.prototype.save).toHaveBeenCalledTimes(1);
+  });
+
+  it('should return 500 if there is an error saving the announcement', async () => {
+    // Mock the save() method to reject with an error
+    const errorMessage = 'Database error';
+    Announcement.prototype.save.mockRejectedValue(new Error(errorMessage));
+
+    const response = await request(app)
+      .post('/add-announcement')
+      .send(mockAnnouncementData);
+
+    // Assertions
+    expect(response.status).toBe(500);
+    expect(response.text).toBe('Error adding announcement: ' + errorMessage);
+    expect(Announcement.prototype.save).toHaveBeenCalledTimes(1);
+  });
+});
