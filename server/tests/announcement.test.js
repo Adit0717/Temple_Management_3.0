@@ -90,3 +90,4 @@ describe('POST /add-announcement', () => {
     expect(Announcement.prototype.save).toHaveBeenCalledTimes(1);
   });
 });
+
