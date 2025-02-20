@@ -21,7 +21,7 @@
   margin-bottom: 20px;
 }
 
-/* ✅ Ensures input and button are properly aligned */
+/* Ensures input and button are properly aligned */
 .newsletter-form {
   display: flex;
   align-items: center;
@@ -39,7 +39,7 @@
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
-  height: 48px; /* ✅ Forces equal height with button */
+  height: 48px; /*Forces equal height with button */
 }
 
 .newsletter-input:focus {
@@ -48,7 +48,7 @@
   box-shadow: 0 0 5px rgba(255, 167, 38, 0.5);
 }
 
-/* ✅ Fixes the vertical alignment issue */
+/*Fixes the vertical alignment issue */
 .newsletter-button {
   background-color: #ffa726;
   color: white;
@@ -59,7 +59,7 @@
   cursor: pointer;
   transition: background-color 0.3s;
   
-  /* 🚀 Force equal height and alignment */
+  /*Force equal height and alignment */
   height: 48px;
   display: flex;
   align-items: center;
@@ -78,7 +78,7 @@
   color: green;
 }
 
-/* 🚀 Fixes any unexpected spacing issues */
+/*Fixes any unexpected spacing issues */
 .newsletter-form * {
   margin: 0;
   padding: 0;
