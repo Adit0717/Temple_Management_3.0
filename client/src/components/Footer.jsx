@@ -34,8 +34,8 @@ const Footer = () => {
           <li><a href="https://x.com/ShriRamTeerth" target="_blank" rel="noopener noreferrer"><em>X</em></a></li>
         </ul>
         <p className="footer-copyright">
-          © 2024 Ram Mandir Temple, All Rights Reserved.
-          Developed By <span className="developer">Group 2</span>
+          © 2025 Ram Mandir Temple, All Rights Reserved.
+          Developed By <span className="developer">Group 8</span>
         </p>
       </div>
       {showScroll && (
