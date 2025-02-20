@@ -1,8 +1,23 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./styles/footer.css";
 import footerlogo from '../assets/SRMA_logo.png'
 
 const Footer = () => {
+  const [showScroll, setShowScroll] = useState(false);
+
+  useEffect(() => {
+    const checkScroll = () => {
+      if (window.scrollY > 100) {
+        setShowScroll(true);
+      } else {
+        setShowScroll(false);
+      }
+    };
+
+    window.addEventListener("scroll", checkScroll);
+    return () => window.removeEventListener("scroll", checkScroll);
+  }, []);
+
   return (
     <footer className="footer">
       <div className="footer-content">
@@ -23,9 +38,14 @@ const Footer = () => {
           Developed By <span className="developer">Group 2</span>
         </p>
       </div>
-      <button className="scroll-to-top" onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}>
-        ↑
-      </button>
+      {showScroll && (
+        <button
+          className="scroll-to-top"
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        >
+          ↑
+        </button>
+      )}
     </footer>
   );
 };
