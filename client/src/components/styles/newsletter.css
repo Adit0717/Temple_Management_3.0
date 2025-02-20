@@ -21,21 +21,25 @@
   margin-bottom: 20px;
 }
 
+/* Ensures input and button are properly aligned */
 .newsletter-form {
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: space-between;
   gap: 10px;
   max-width: 100%;
+  width: 100%;
+  flex-wrap: nowrap;
 }
 
 .newsletter-input {
   flex: 1;
-  padding: 10px;
+  padding: 12px;
   font-size: 1em;
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
+  height: 48px; /*Forces equal height with button */
 }
 
 .newsletter-input:focus {
@@ -44,17 +48,24 @@
   box-shadow: 0 0 5px rgba(255, 167, 38, 0.5);
 }
 
+/*Fixes the vertical alignment issue */
 .newsletter-button {
   background-color: #ffa726;
   color: white;
   border: none;
   border-radius: 4px;
-  padding: 10px 20px;
+  padding: 12px 20px;
   font-size: 1em;
   cursor: pointer;
   transition: background-color 0.3s;
-  height: auto;
+  
+  /*Force equal height and alignment */
+  height: 48px;
+  display: flex;
   align-items: center;
+  justify-content: center;
+  margin: 0;
+  white-space: nowrap;
 }
 
 .newsletter-button:hover {
@@ -65,4 +76,11 @@
   margin-top: 15px;
   font-size: 1em;
   color: green;
+}
+
+/*Fixes any unexpected spacing issues */
+.newsletter-form * {
+  margin: 0;
+  padding: 0;
+  vertical-align: middle;
 }

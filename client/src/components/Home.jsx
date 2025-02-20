@@ -74,13 +74,13 @@ const HomePage = () => {
 
   return (
     <div>
-  
-      <Announcements
+       <Announcements
         announcements={announcements}
         onAdd={handleAdd}
         onEdit={handleEdit}
         onDelete={handleDelete}
       />
+  
       <Footer />
     </div>
   );
