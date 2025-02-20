@@ -30,8 +30,8 @@ const Footer = () => {
         <ul className="footer-social">
           <li><a href="https://www.facebook.com/srjbtkshetra/" target="_blank" rel="noopener noreferrer"><em>Facebook</em></a></li>
           <li><a href="https://www.instagram.com/shriramteerthkshetra/?hl=en" target="_blank" rel="noopener noreferrer"><em>Instagram</em></a></li>
-          <li><a href="https://youtube.com" target="_blank" rel="noopener noreferrer"><em>YouTube</em></a></li>
-          <li><a href="https://twitter.com" target="_blank" rel="noopener noreferrer"><em>Twitter</em></a></li>
+          <li><a href="https://www.youtube.com/@DoordarshanNational" target="_blank" rel="noopener noreferrer"><em>YouTube</em></a></li>
+          <li><a href="https://x.com/ShriRamTeerth" target="_blank" rel="noopener noreferrer"><em>X</em></a></li>
         </ul>
         <p className="footer-copyright">
           © 2024 Ram Mandir Temple, All Rights Reserved.
