@@ -158,12 +158,12 @@ const Announcements = () => {
           <p>Evening: 5:30pm - 8:00pm</p>
 
           <h3><u>Temple Office Hours:</u></h3>
-          <p>Mon - Fri: 10:00am - 6:00pm</p>
-          <p>Sat & Sun: 10:00am - 5:00pm</p>
+          <p>Monday - Friday: 10:00am - 6:00pm</p>
+          <p>Saturday & Sunday: 10:00am - 5:00pm</p>
   
 
           <h3><u>Special Pooja Timings</u></h3>
-          <p>Abhishekam(Ritual Bathing): 6:00pm</p>
+          <p>Ritual Bathing: 6:00pm</p>
           <p>Teerth Poojan, Jal Yatra: 6:30pm</p>
           
           <section className="location-section">
