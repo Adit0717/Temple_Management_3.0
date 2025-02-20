@@ -486,6 +486,33 @@ app.post('/events', async (req, res) => {
   }
 });
 
+app.put('/events/:id', async (req, res) => {
+  try {
+    const { title, start, allDay } = req.body;
+    const {id} = req.params;
+    
+    const utcStartDate = allDay
+      ? new Date(new Date(start).setUTCHours(0, 0, 0, 0)).toISOString()
+      : new Date(start).toISOString();
+    
+    const updatedEvent = await Event.findByIdAndUpdate
+    (id, {
+      title,
+      start: utcStartDate,
+      allDay: allDay || false,
+    }, { new: true, runValidators: true });
+    
+    if(!updatedEvent){
+      return res.status(404).json({ message: "Event not found" });
+    }
+
+    res.status(200).json(updatedEvent);
+  } catch (error) {
+    console.error("Error saving event:", error);
+    res.status(500).json({ message: "Error saving event" });
+  }
+});
+
 
 app.get('/events', async (req, res) => {
   try {
