@@ -1,8 +1,8 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom"; // Needed for <Link> components
-import NavbarAdmin from "../NavbarAdmin"; // Adjust path based on your structure
-import NavbarDevotee from "../NavbarDevotee"; // Adjust path based on your structure
+import NavbarAdmin from '../components/NavBarAdmin'
+import NavbarDevotee from '../components/NavBarDevotee'
 
 describe("Navbar role-based navigation", () => {
   
