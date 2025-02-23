@@ -1,25 +1,54 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import { BrowserRouter } from "react-router-dom";
-import Navbar from "../components/NavBar";
+import { BrowserRouter } from "react-router-dom"; // Needed for <Link> components
+import NavbarAdmin from "../NavbarAdmin"; // Adjust path based on your structure
+import NavbarDevotee from "../NavbarDevotee"; // Adjust path based on your structure
 
-test("renders correct navbar options for /home route", () => {
-  render(
-    <BrowserRouter>
-      <Navbar />
-    </BrowserRouter>
-  );
-
-  expect(screen.getByAltText(/Temple Logo/i)).toBeInTheDocument();
-  expect(screen.getByText(/Ram Mandir/i)).toBeInTheDocument();
-
-  expect(screen.getByText(/Home/i)).toBeInTheDocument();
-  expect(screen.getByText(/Live-Stream/i)).toBeInTheDocument();  
-  expect(screen.getByText(/Events/i)).toBeInTheDocument();
-  expect(screen.getByText(/Login/i)).toBeInTheDocument();
-  expect(screen.getByText(/Signup/i)).toBeInTheDocument();
+describe("Navbar role-based navigation", () => {
   
-  expect(screen.getByText(/Mission/i)).toBeInTheDocument();
-  expect(screen.getByText(/Contact Us/i)).toBeInTheDocument();
-  expect(screen.getByText(/About the Priest/i)).toBeInTheDocument();
+  test("renders correct navigation links for an Admin", () => {
+    render(
+      <BrowserRouter>
+        <NavbarAdmin />
+      </BrowserRouter>
+    );
+
+    // General links (common for all users)
+    expect(screen.getByText("Home")).toBeInTheDocument();
+    expect(screen.getByText("Live-Stream")).toBeInTheDocument();
+    expect(screen.getByText("About")).toBeInTheDocument();
+    expect(screen.getByText("Events")).toBeInTheDocument();
+    expect(screen.getByText("Services")).toBeInTheDocument();
+    expect(screen.getByText("Logout")).toBeInTheDocument();
+
+    // Admin-specific links
+    expect(screen.getByText("View Appointments")).toBeInTheDocument();
+
+    // Devotee-only links should NOT be present
+    expect(screen.queryByText("Donations")).not.toBeInTheDocument();
+    expect(screen.queryByText("Book Appointments")).not.toBeInTheDocument();
+  });
+
+  test("renders correct navigation links for a Devotee", () => {
+    render(
+      <BrowserRouter>
+        <NavbarDevotee />
+      </BrowserRouter>
+    );
+
+    // General links (common for all users)
+    expect(screen.getByText("Home")).toBeInTheDocument();
+    expect(screen.getByText("Live-Stream")).toBeInTheDocument();
+    expect(screen.getByText("About")).toBeInTheDocument();
+    expect(screen.getByText("Events")).toBeInTheDocument();
+    expect(screen.getByText("Services")).toBeInTheDocument();
+    expect(screen.getByText("Logout")).toBeInTheDocument();
+
+    // Devotee-specific links
+    expect(screen.getByText("Donations")).toBeInTheDocument();
+    expect(screen.getByText("Book Appointments")).toBeInTheDocument();
+
+    // Admin-only links should NOT be present
+    expect(screen.queryByText("View Appointments")).not.toBeInTheDocument();
+  });
 });
