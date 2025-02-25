@@ -4,6 +4,7 @@ import Navbar from "./NavBar";
 import Footer from "./Footer";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { FaEnvelope, FaUser, FaPhone } from "react-icons/fa"; // Import icons
 
 const DevoteeAppointments = () => {
   const [priests, setPriests] = useState([]);
@@ -14,7 +15,6 @@ const DevoteeAppointments = () => {
   const [info, setInfo] = useState("");
   const [message, setMessage] = useState("");
   const email = localStorage.getItem("email");
-  //const email = "krisa04@pfw.edu";
 
   useEffect(() => {
     fetchPriests();
@@ -44,7 +44,7 @@ const DevoteeAppointments = () => {
       date: date,
       time: time,
       information: info,
-      userName: userName, 
+      userName: userName,
       email: email,
     };
 
@@ -79,22 +79,67 @@ const DevoteeAppointments = () => {
         <h2 className="appointments-header">Book an Appointment with a priest</h2>
         <div className="appointments-content">
           {/* Left Side: Priest Information */}
-          <div className="priest-info">
-            <h3>Priest Information</h3>
+          <div
+            className="priest-info"
+            style={{
+              marginRight: "20px",
+              backgroundColor: "#fff",
+              padding: "20px",
+              borderRadius: "10px",
+              boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+            }}
+          >
+            <h3 style={{ fontSize: "24px", marginBottom: "20px", color: "#333", textAlign: "center" }}>
+              Priest Information
+            </h3>
             {priests.length === 0 ? (
-              <p>No priests available.</p>
+              <p style={{ textAlign: "center", color: "#777" }}>No priests available.</p>
             ) : (
-              <ul>
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(2, 1fr)", // Two columns
+                  gap: "15px", // Space between cards
+                }}
+              >
                 {priests.map((priest) => (
-                  <li key={priest._id}>
-                    <strong>{priest.firstName} {priest.lastName}</strong> - {priest.service}
-                  </li>
+                  <div
+                    key={priest._id}
+                    style={{
+                      backgroundColor: "#fff",
+                      padding: "3px",
+                      borderRadius: "8px",
+                      boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+                      transition: "transform 0.2s, box-shadow 0.2s",
+                      cursor: "pointer",
+                      height: "100px", // Increased height
+                      width: "100%", // Reduced width (automatically adjusted by grid)
+                    }}
+                    onMouseEnter={(e) => (e.currentTarget.style.transform = "scale(1.02)")}
+                    onMouseLeave={(e) => (e.currentTarget.style.transform = "scale(1)")}
+                  >
+                    <div style={{ display: "flex", alignItems: "center", marginBottom: "10px" }}>
+                      <FaUser style={{ marginRight: "6px", color: "#ff6f00", fontSize: "18px" }} />
+                      <strong style={{ fontSize: "18px", color: "#333" }}>
+                        {priest.firstName} {priest.lastName}
+                      </strong>
+                    </div>
+                    <div style={{ display: "flex", alignItems: "center", marginBottom: "10px" }}>
+                      <FaEnvelope style={{ marginRight: "10px", color: "#555", fontSize: "14px" }} />
+                      <span style={{ color: "#555", fontSize: "14px" }}>{priest.email}</span>
+                    </div>
+                    {/* Add mobile number here later */}
+                    <div style={{ display: "flex", alignItems: "center" }}>
+                      <FaPhone style={{ marginRight: "10px", color: "#555", fontSize: "14px" }} />
+                      <span style={{ color: "#555", fontSize: "14px" }}>{priest.phone}</span>
+                    </div>
+                  </div>
                 ))}
-              </ul>
+              </div>
             )}
           </div>
 
-          {/* Right Side: Appointment Form */}
+          {/* Right Side: Appointment Form (Unchanged) */}
           <div className="appointment-form">
             <h3>Book your slot</h3>
             <form onSubmit={handleBookAppointment}>
@@ -153,7 +198,7 @@ const DevoteeAppointments = () => {
               <button type="submit" className="book-button">
                 Book Appointment
               </button>
-            </form>            
+            </form>
           </div>
         </div>
       </div>
@@ -164,5 +209,3 @@ const DevoteeAppointments = () => {
 };
 
 export default DevoteeAppointments;
-
-//{message && <p className="status-message">{message}</p>}
