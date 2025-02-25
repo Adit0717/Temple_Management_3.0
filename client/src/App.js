@@ -15,6 +15,8 @@ import Payment from './components/Payment';
 import Services from './components/Services';
 import DevoteeAppointment from './components/DevoteeAppointments';
 import AdministratorAppointments from './components/AdminView';
+import ForgotPassword from './components/ForgotPassword';
+import ResetPassword from './components/ResetPassword';
 
 // Navbar Components
 import Navbar from './components/NavBar';
@@ -64,6 +66,8 @@ function App() {
           <Route path='/services' element={<Services />} />
           <Route path='/book-appointment' element={<DevoteeAppointment />} />          
           <Route path='/view-all-appointments' element={<AdministratorAppointments />} />
+          <Route path='/forgot-password' element={<ForgotPassword />} />
+          <Route path='/reset-password' element={<ResetPassword />} />
         </Routes>
       </Router>
     </div>
