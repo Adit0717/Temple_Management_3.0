@@ -139,6 +139,10 @@ const LoginPage = () => {
             <p className="signup-link">
               Don't have an account? <a href="/sign-up">Signup</a>
             </p>
+            {/* Added Forgot Password link */}
+            <p className="forgot-password">
+                <a href="/forgot-password">Forgot Password?</a>
+            </p>
           </div>
         </div>
         <Footer />
