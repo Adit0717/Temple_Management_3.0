@@ -55,7 +55,7 @@ const Services = () => {
     try {
       const url = editingEvent
         ? `http://localhost:3001/services/${editingEvent._id}`
-        : "http://localhost:3001/add-service";
+        : `http://localhost:3001/add-service`;
 
       const method = editingEvent ? "PUT" : "POST";
 
@@ -144,44 +144,56 @@ const Services = () => {
           )
         )}
       </div>
-
+      
       {/* Modal for Adding/Editing Event */}
-      {showModal && (
-        <div className="modal-overlay">
-          <div className="modal-content">
-            <h3>
-              {editingEvent ? "Edit Event" : "Add New Event for"}{" "}
-              {selectedCategory}
-            </h3>
-            <label>Title:</label>
-            <input
-              type="text"
-              value={newEvent.title}
-              onChange={(e) =>
-                setNewEvent({ ...newEvent, title: e.target.value })
-              }
-              placeholder="Enter event title"
-            />
-            <label>Description:</label>
-            <textarea
-              value={newEvent.description}
-              onChange={(e) =>
-                setNewEvent({ ...newEvent, description: e.target.value })
-              }
-              placeholder="Enter event description"
-            />
-            <div className="modal-actions">
-              <button onClick={handleSaveEvent} className="save-button">
-                {editingEvent ? "Update" : "Save"}
-              </button>
-              <button onClick={handleCloseModal} className="cancel-button">
-                Cancel
-              </button>
+        {showModal && (
+          <div className="modal-overlay">
+            <div className="modal-content">
+              <h3>
+                {editingEvent ? "Edit Event" : "Add New Event for"} {selectedCategory}
+              </h3>
+
+              {/* Wrap in Form */}
+              <form onSubmit={(e) => {
+                e.preventDefault(); // Prevent default form submission
+                handleSaveEvent();  // Call save event function
+              }}>
+                <label htmlFor="event-title">Title:</label>
+                <input
+                  id="event-title"
+                  type="text"
+                  value={newEvent.title}
+                  onChange={(e) =>
+                    setNewEvent({ ...newEvent, title: e.target.value })
+                  }
+                  placeholder="Enter event title"
+                  required
+                />
+
+                <label htmlFor="event-description">Description:</label>
+                <textarea
+                  id="event-description"
+                  value={newEvent.description}
+                  onChange={(e) =>
+                    setNewEvent({ ...newEvent, description: e.target.value })
+                  }
+                  placeholder="Enter event description"
+                  required
+                />
+
+                <div className="modal-actions">
+                  {/* Submit button for form */}
+                  <button type="submit" className="save-button">
+                    {editingEvent ? "Update" : "Save"}
+                  </button>
+                  <button type="button" onClick={handleCloseModal} className="cancel-button">
+                    Cancel
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
-        </div>
-      )}
-
+        )}
       <Footer />
     </div>
   );
