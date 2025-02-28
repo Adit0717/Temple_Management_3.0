@@ -11,8 +11,8 @@ describe("Footer Component", () => {
     const socialLinks = [
       { name: "Facebook", href: "https://www.facebook.com/srjbtkshetra/" },
       { name: "Instagram", href: "https://www.instagram.com/shriramteerthkshetra/?hl=en" },
-      { name: "Twitter", href: "https://twitter.com" },
-      { name: "YouTube", href: "https://youtube.com" },
+      { name: "X", href: "https://x.com/ShriRamTeerth" },
+      { name: "YouTube", href: "https://www.youtube.com/@DoordarshanNational" },
     ];
 
     socialLinks.forEach(({ name, href }) => {
@@ -25,7 +25,7 @@ describe("Footer Component", () => {
   });
 
   test("includes copyright text and developer credit", () => {
-    expect(screen.getByText(/© 2024 Ram Mandir Temple/i)).toBeInTheDocument();
+    expect(screen.getByText(/© 2025 Ram Mandir Temple/i)).toBeInTheDocument();
     expect(screen.getByText(/Developed by/i)).toBeInTheDocument();
   });
 
