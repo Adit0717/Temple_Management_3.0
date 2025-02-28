@@ -180,17 +180,20 @@ app.post('/login', async (req, res) => {
   return res.status(200).json({ message: 'Logged successfully', user: user, token: token });
 });
 
-/*
+
 app.patch('/reset-password', async (req, res) => {
   const { email, otp, password } = req.body;
   try {
     const user = await User.findOne({ email: email, otp: otp });
     if (user) {
-      user.password = password;
-      user.otp = '';
+      // Hash the new password before saving
+      const hashedPassword = await bcrypt.hash(password, 10);
+      user.password = hashedPassword;
+      user.otp = ''; // Clear OTP after successful reset
       await user.save();
-      res.send('Password reset successful');
-    } else {
+
+      res.json({ message: "Password reset successful!" });
+  } else {
       res.status(400).send('Invalid OTP or email');
     }
   } catch (error) {
@@ -198,8 +201,8 @@ app.patch('/reset-password', async (req, res) => {
     res.status(500).send('Server error');
   }
 });
-*/
 
+/*
 app.patch('/reset-password', async (req, res) => {
     const { email, password, password1 } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -214,7 +217,29 @@ app.patch('/reset-password', async (req, res) => {
         res.status(500).send('Server error');
     }
   });
+*/
+app.post('/send-otp', async (req, res) => {
+    const { email } = req.body;
+    const otp = Math.floor(100000 + Math.random() * 900000).toString(); // Generate 6-digit OTP
 
+    try {
+        const user = await User.findOne({ email });
+        if (user) {
+            user.otp = otp;
+            await user.save();
+            res.send("OTP sent successfully");
+        } else {
+            res.status(400).send("User not found");
+        }
+        transporter.sendMail({
+          to: email,
+          subject: "Verify your Email - OTP for Signup",
+          text: `Your OTP for email verification is ${otp}. It is valid for 15 minutes.`,
+        });
+    } catch (error) {
+        res.status(500).send("Server error");
+    }
+});
 
 //------------------------------------------------------------------------------------ 
 //API Endpoints related to Priest
@@ -223,6 +248,9 @@ app.post('/create-priest', async (req, res) => {
   const empId = Math.floor(10000 + Math.random() * 90000).toString();
 
   try {
+    if (!password || typeof password !== "string") {
+      return res.status(400).json({ error: "Invalid password" });
+    }
     // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 

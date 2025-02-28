@@ -19,7 +19,7 @@
 }
 
 .login-image {
-  width: 100%;
+  width: 103.5%;
   height: 100%;
   object-fit: cover;
   border-radius: 10px;
@@ -143,5 +143,25 @@ select:focus {
 }
 
 .toggle-password:hover {
+  text-decoration: underline;
+}
+
+.forgot-password {
+  margin-top: 10px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.forgot-password a {
+  color: #ff6f00;
+  /* Orange color matching button */
+  text-decoration: none;
+  transition: color 0.3s ease-in-out;
+}
+
+.forgot-password a:hover {
+  color: #ffa726;
+  /* Lighter orange on hover */
   text-decoration: underline;
 }
