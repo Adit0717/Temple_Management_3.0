@@ -478,10 +478,10 @@ app.post('/events', async (req, res) => {
       start: utcStartDate,
       allDay: allDay || false,
     });
-    await event.save();
-    res.status(201).json(event);
+    const savedEvent = await event.save();
+    res.status(201).json(savedEvent);
   } catch (error) {
-    console.error("Error saving event:", error);
+    //console.error("Error saving event:", error);
     res.status(500).json({ message: "Error saving event" });
   }
 });
@@ -580,9 +580,9 @@ app.get('/newsletter-email-list', async (req, res) => {
 //Run the backend app in port mentioned in .env
 
 
- app.listen(PORT, () => {
-   console.log(`Server running on port ${PORT}`);
- });
+//  app.listen(PORT, () => {
+//    console.log(`Server running on port ${PORT}`);
+//  });
 
 
-//module.exports = app; //Run this for testing
+module.exports = app; //Run this for testing
