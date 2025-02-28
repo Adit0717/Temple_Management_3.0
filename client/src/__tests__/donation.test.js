@@ -1,9 +1,9 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
-import Donations from "../components/Dontations"; // Adjust path if needed
+import Donations from "../components/Dontations"; 
 
-// Mock useNavigate globally
+
 const mockNavigate = jest.fn();
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"),
@@ -12,7 +12,7 @@ jest.mock("react-router-dom", () => ({
 
 describe("Donations Page UI & Buttons", () => {
   beforeEach(() => {
-    jest.clearAllMocks(); // Clear mock calls before each test
+    jest.clearAllMocks(); 
   });
 
  
@@ -23,7 +23,6 @@ describe("Donations Page UI & Buttons", () => {
       </MemoryRouter>
     );
 
-    // Select only the h2 heading for "Donations"
     const donationHeading = screen.getAllByText(/donations/i).find((el) => el.tagName === "H2");
     expect(donationHeading).toBeInTheDocument();
 
@@ -35,7 +34,6 @@ describe("Donations Page UI & Buttons", () => {
     expect(screen.getByText(/By The Ram Mandir Administration/i)).toBeInTheDocument();
   });
 
-  // ✅ Test 2: Check if dropdown contains correct donation values
   test("Dropdown should contain correct donation values", () => {
     render(
       <MemoryRouter>
@@ -43,16 +41,14 @@ describe("Donations Page UI & Buttons", () => {
       </MemoryRouter>
     );
 
-    const dropdown = screen.getByRole("combobox"); // Find dropdown
+    const dropdown = screen.getByRole("combobox"); 
     expect(dropdown).toBeInTheDocument();
 
-    // Check if dropdown contains expected options
     expect(screen.getByText("$25 per month")).toBeInTheDocument();
     expect(screen.getByText("$55 per month")).toBeInTheDocument();
     expect(screen.getByText("$100 per month")).toBeInTheDocument();
   });
 
-  // ✅ Test 3: One-Time Donation button should be clickable
   test("One-Time Donation button should be clickable", () => {
     render(
       <MemoryRouter>
@@ -60,14 +56,13 @@ describe("Donations Page UI & Buttons", () => {
       </MemoryRouter>
     );
 
-    const oneTimeDonateButton = screen.getAllByText("Donate")[0]; // First Donate button
+    const oneTimeDonateButton = screen.getAllByText("Donate")[0]; 
     fireEvent.click(oneTimeDonateButton);
 
     expect(mockNavigate).toHaveBeenCalledTimes(1);
     expect(mockNavigate).toHaveBeenCalledWith("/payment", { state: { donationAmount: 50 } });
   });
 
-  // ✅ Test 4: Monthly Donation button should be clickable
   test("Monthly Donation button should be clickable", () => {
     render(
       <MemoryRouter>
@@ -75,13 +70,12 @@ describe("Donations Page UI & Buttons", () => {
       </MemoryRouter>
     );
 
-    const monthlyDonateButton = screen.getAllByText("Donate")[1]; // Second Donate button
+    const monthlyDonateButton = screen.getAllByText("Donate")[1]; 
     fireEvent.click(monthlyDonateButton);
 
-    expect(mockNavigate).toHaveBeenCalled(); // Ensure navigation happens
+    expect(mockNavigate).toHaveBeenCalled(); 
   });
 
-  // ✅ Test 5: Donation Form link should exist and have correct attributes
   test("Donation Form link should exist and have correct attributes", () => {
     render(
       <MemoryRouter>

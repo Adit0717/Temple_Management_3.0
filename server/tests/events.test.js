@@ -1,19 +1,19 @@
-jest.mock("../class-models/Event"); // Mock the Event model
+jest.mock("../class-models/Event"); 
 const request = require("supertest");
-const app = require("../server"); // Directly use Express app
-const Event = require("../class-models/Event"); // Mocked Event model
+const app = require("../server"); 
+const Event = require("../class-models/Event"); 
 
-// Suppress console logs during tests
 beforeAll(() => {
-  jest.spyOn(console, "log").mockImplementation(() => {}); // Mock console.log
+  jest.spyOn(console, "log").mockImplementation(() => {}); 
 });
 
 afterAll(() => {
-  jest.restoreAllMocks(); // Restore console.log after tests
+  jest.restoreAllMocks(); 
 });
 
 beforeEach(() => {
-  jest.clearAllMocks(); // Clear mocks before each test
+  jest.clearAllMocks(); 
+  
 });
 
 describe("GET /events", () => {
@@ -46,7 +46,6 @@ describe("POST /events", () => {
       allDay: true,
     };
 
-    // Properly mock the Event constructor
     Event.mockImplementation(function () {
       return {
         save: jest.fn().mockResolvedValue(mockEvent),

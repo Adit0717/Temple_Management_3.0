@@ -1,10 +1,10 @@
 const request = require("supertest");
 const mongoose = require("mongoose");
-const app = require("../server"); // Ensure correct path
-const Appointment = require("../class-models/Appointment"); // Adjust path as needed
+const app = require("../server"); 
+const Appointment = require("../class-models/Appointment"); 
 const nodemailer = require("nodemailer");
 
-jest.mock("../class-models/Appointment"); // Mock Mongoose model
+jest.mock("../class-models/Appointment"); 
 jest.mock("../mailer", () => ({
   sendMail: jest.fn().mockResolvedValue({ messageId: "mock-email-id" }),
 }));
@@ -96,7 +96,7 @@ describe("Appointments API Tests", () => {
       const appointmentId = new mongoose.Types.ObjectId();
       const updatedStatus = "confirmed";
       const mockAppointment = {
-        _id: appointmentId.toString(), // Convert ObjectId to string
+        _id: appointmentId.toString(), 
         status: updatedStatus,
       };
 
@@ -108,7 +108,7 @@ describe("Appointments API Tests", () => {
 
       expect(response.status).toBe(200);
       expect(response.body).toEqual({
-        _id: appointmentId.toString(), // Convert ObjectId to string before comparison
+        _id: appointmentId.toString(), 
         status: updatedStatus,
       });
 

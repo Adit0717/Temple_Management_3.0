@@ -32,7 +32,7 @@ describe("Footer Component", () => {
   test("displays the temple logo centered for branding", () => {
     const logo = screen.getByAltText(/Logo/i);
     expect(logo).toBeInTheDocument();
-    expect(logo).toHaveAttribute("src"); // Ensures there's an image source
+    expect(logo).toHaveAttribute("src"); 
   });
 
   test("shows scroll-to-top button when scrolled to bottom", () => {
@@ -42,7 +42,6 @@ describe("Footer Component", () => {
   });
 
   test("clicking scroll-to-top button scrolls back to top", () => {
-    // Mock window.scrollTo
     window.scrollTo = jest.fn();
     
     fireEvent.scroll(window, { target: { scrollY: 1000 } });

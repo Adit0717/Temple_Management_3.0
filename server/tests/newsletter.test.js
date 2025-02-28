@@ -1,18 +1,18 @@
-jest.mock("../class-models/NewsLetter"); // Mock the NewsLetter model
+jest.mock("../class-models/NewsLetter"); 
 const request = require("supertest");
-const app = require("../server"); // Import the Express app
-const NewsLetter = require("../class-models/NewsLetter"); // Mocked model
+const app = require("../server"); 
+const NewsLetter = require("../class-models/NewsLetter"); 
 
 beforeAll(() => {
-  jest.spyOn(console, "error").mockImplementation(() => {}); // Suppress error logs in tests
+  jest.spyOn(console, "error").mockImplementation(() => {}); 
 });
 
 afterAll(() => {
-  jest.restoreAllMocks(); // Restore original console behavior after tests
+  jest.restoreAllMocks(); 
 });
 
 beforeEach(() => {
-  jest.clearAllMocks(); // Clear mocks before each test
+  jest.clearAllMocks(); 
 });
 
 describe("POST /subscribe-newsletter", () => {
@@ -23,8 +23,8 @@ describe("POST /subscribe-newsletter", () => {
       date: "2025-06-15T23:57:52.4272",
     };
 
-    NewsLetter.findOne.mockResolvedValue(null); // Simulate no existing subscription
-    NewsLetter.prototype.save = jest.fn().mockResolvedValue(mockSubscription); // Mock DB save
+    NewsLetter.findOne.mockResolvedValue(null); 
+    NewsLetter.prototype.save = jest.fn().mockResolvedValue(mockSubscription); 
 
     const response = await request(app)
       .post("/subscribe-newsletter")
@@ -38,7 +38,7 @@ describe("POST /subscribe-newsletter", () => {
   test("should return 400 if the email is already subscribed", async () => {
     const existingSubscription = { emailId: "test@example.com", date: "2025-06-15" };
 
-    NewsLetter.findOne.mockResolvedValue(existingSubscription); // Simulate existing email
+    NewsLetter.findOne.mockResolvedValue(existingSubscription); 
 
     const response = await request(app)
       .post("/subscribe-newsletter")
@@ -51,7 +51,7 @@ describe("POST /subscribe-newsletter", () => {
   });
 
   test("should return 500 if an error occurs during subscription", async () => {
-    NewsLetter.findOne.mockRejectedValue(new Error("Database error")); // Simulate DB error
+    NewsLetter.findOne.mockRejectedValue(new Error("Database error")); 
 
     const response = await request(app)
       .post("/subscribe-newsletter")
@@ -71,7 +71,7 @@ describe("GET /newsletter-email-list", () => {
       { emailId: "user2@example.com", date: "2025-06-11" },
     ];
 
-    NewsLetter.find.mockResolvedValue(mockEmailList); // Mock DB fetch
+    NewsLetter.find.mockResolvedValue(mockEmailList); 
 
     const response = await request(app).get("/newsletter-email-list");
 

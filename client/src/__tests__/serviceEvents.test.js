@@ -3,12 +3,11 @@ import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import Services from "../components/Services";
 import { BrowserRouter } from "react-router-dom";
 
-// Mock fetch API for service-related requests
 global.fetch = jest.fn();
 
 beforeEach(() => {
   jest.clearAllMocks();
-  localStorage.setItem("role", "administrator"); // Mock role as "administrator" for testing
+  localStorage.setItem("role", "administrator"); 
 });
 
 describe("Services Component", () => {
