@@ -11,8 +11,8 @@ describe("Footer Component", () => {
     const socialLinks = [
       { name: "Facebook", href: "https://www.facebook.com/srjbtkshetra/" },
       { name: "Instagram", href: "https://www.instagram.com/shriramteerthkshetra/?hl=en" },
-      { name: "Twitter", href: "https://twitter.com" },
-      { name: "YouTube", href: "https://youtube.com" },
+      { name: "X", href: "https://x.com/ShriRamTeerth" },
+      { name: "YouTube", href: "https://www.youtube.com/@DoordarshanNational" },
     ];
 
     socialLinks.forEach(({ name, href }) => {
@@ -25,14 +25,14 @@ describe("Footer Component", () => {
   });
 
   test("includes copyright text and developer credit", () => {
-    expect(screen.getByText(/© 2024 Ram Mandir Temple/i)).toBeInTheDocument();
+    expect(screen.getByText(/© 2025 Ram Mandir Temple/i)).toBeInTheDocument();
     expect(screen.getByText(/Developed by/i)).toBeInTheDocument();
   });
 
   test("displays the temple logo centered for branding", () => {
     const logo = screen.getByAltText(/Logo/i);
     expect(logo).toBeInTheDocument();
-    expect(logo).toHaveAttribute("src"); // Ensures there's an image source
+    expect(logo).toHaveAttribute("src"); 
   });
 
   test("shows scroll-to-top button when scrolled to bottom", () => {
@@ -42,7 +42,6 @@ describe("Footer Component", () => {
   });
 
   test("clicking scroll-to-top button scrolls back to top", () => {
-    // Mock window.scrollTo
     window.scrollTo = jest.fn();
     
     fireEvent.scroll(window, { target: { scrollY: 1000 } });

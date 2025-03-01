@@ -506,10 +506,10 @@ app.post('/events', async (req, res) => {
       start: utcStartDate,
       allDay: allDay || false,
     });
-    await event.save();
-    res.status(201).json(event);
+    const savedEvent = await event.save();
+    res.status(201).json(savedEvent);
   } catch (error) {
-    console.error("Error saving event:", error);
+    //console.error("Error saving event:", error);
     res.status(500).json({ message: "Error saving event" });
   }
 });

@@ -1,6 +1,6 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import { BrowserRouter } from "react-router-dom"; // Needed for <Link> components
+import { BrowserRouter } from "react-router-dom"; 
 import NavbarAdmin from '../components/NavBarAdmin'
 import NavbarDevotee from '../components/NavBarDevotee'
 
@@ -13,7 +13,6 @@ describe("Navbar role-based navigation", () => {
       </BrowserRouter>
     );
 
-    // General links (common for all users)
     expect(screen.getByText("Home")).toBeInTheDocument();
     expect(screen.getByText("Live-Stream")).toBeInTheDocument();
     expect(screen.getByText("About")).toBeInTheDocument();
@@ -21,10 +20,8 @@ describe("Navbar role-based navigation", () => {
     expect(screen.getByText("Services")).toBeInTheDocument();
     expect(screen.getByText("Logout")).toBeInTheDocument();
 
-    // Admin-specific links
     expect(screen.getByText("View Appointments")).toBeInTheDocument();
 
-    // Devotee-only links should NOT be present
     expect(screen.queryByText("Donations")).not.toBeInTheDocument();
     expect(screen.queryByText("Book Appointments")).not.toBeInTheDocument();
   });
@@ -36,7 +33,6 @@ describe("Navbar role-based navigation", () => {
       </BrowserRouter>
     );
 
-    // General links (common for all users)
     expect(screen.getByText("Home")).toBeInTheDocument();
     expect(screen.getByText("Live-Stream")).toBeInTheDocument();
     expect(screen.getByText("About")).toBeInTheDocument();
@@ -44,11 +40,9 @@ describe("Navbar role-based navigation", () => {
     expect(screen.getByText("Services")).toBeInTheDocument();
     expect(screen.getByText("Logout")).toBeInTheDocument();
 
-    // Devotee-specific links
     expect(screen.getByText("Donations")).toBeInTheDocument();
     expect(screen.getByText("Book Appointments")).toBeInTheDocument();
 
-    // Admin-only links should NOT be present
     expect(screen.queryByText("View Appointments")).not.toBeInTheDocument();
   });
 });

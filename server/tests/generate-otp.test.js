@@ -1,9 +1,8 @@
 const request = require('supertest');
-const app = require('../server'); // Import your Express app
-const User = require('../class-models/User'); // Import the User model
-const nodemailer = require('nodemailer'); // Import nodemailer
+const app = require('../server'); 
+const User = require('../class-models/User'); 
+const nodemailer = require('nodemailer'); 
 
-// Mock dependencies
 jest.mock('../class-models/User');
 jest.mock('nodemailer');
 
@@ -12,29 +11,25 @@ describe('POST /generate-otp', () => {
   let sendMailMock;
 
   beforeEach(() => {
-    // Mock user data
     mockUser = {
       email: 'test@example.com',
       otp: '12345',
       otpExpiry: Date.now() + 15 * 60 * 1000,
     };
 
-    // Mock nodemailer's sendMail function
     sendMailMock = jest.fn();
     nodemailer.createTransport.mockReturnValue({
       sendMail: sendMailMock,
     });
 
-    // Mock Math.random to return a fixed value for predictable OTP
     jest.spyOn(global.Math, 'random').mockReturnValue(0.12345);
   });
 
   afterEach(() => {
-    jest.restoreAllMocks(); // Restore all mocks after each test
+    jest.restoreAllMocks(); 
   });
 
   it('should return 400 if the email is already registered', async () => {
-    // Mock User.findOne to return an existing user
     User.findOne.mockResolvedValue(mockUser);
 
     const response = await request(app)
@@ -72,7 +67,6 @@ describe('POST /generate-otp', () => {
   
 
   it('should return 500 if there is a server error', async () => {
-    // Mock User.findOne to throw an error
     User.findOne.mockRejectedValue(new Error('Database error'));
 
     const response = await request(app)
