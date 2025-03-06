@@ -104,3 +104,40 @@ describe("DELETE /services/:id", () => {
     expect(Service.findByIdAndDelete).toHaveBeenCalledTimes(1);
   });
 });
+
+describe("POST /add-service", () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+  test("should add a new service successfully and return 201", async () => {
+    const mockService = {
+      title: "Ganesh Puja",
+      description: "Performed to seek Lord Ganesha’s blessings for success.",
+      category: "Pujas",
+    };
+    Service.mockImplementation(() => ({
+      save: jest.fn().mockResolvedValue(mockService),
+    }));
+    const response = await request(app)
+      .post("/add-service")
+      .send(mockService);
+    expect(response.status).toBe(201);
+    expect(response.text).toBe("Service added successfully");
+    expect(Service).toHaveBeenCalledTimes(1);
+  });
+  test("should return 500 if there is an error adding the service", async () => {
+    Service.mockImplementation(() => ({
+      save: jest.fn().mockRejectedValue(new Error("Database error")),
+    }));
+    const response = await request(app)
+      .post("/add-service")
+      .send({
+        title: "Ganesh Puja",
+        description: "Performed to seek Lord Ganesha’s blessings for success.",
+        category: "Pujas",
+      });
+    expect(response.status).toBe(500);
+    expect(response.text).toBe("Error adding service to the database");
+    expect(Service).toHaveBeenCalledTimes(1);
+  });
+});
