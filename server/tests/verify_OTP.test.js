@@ -88,4 +88,23 @@ describe("POST /verify-otp", () => {
     expect(bcrypt.hash).toHaveBeenCalledTimes(1);
     expect(validUser.save).toHaveBeenCalledTimes(1);
   });
+
+  it('should return 500 if there is a server error', async () => {    
+    User.findOne.mockRejectedValue(new Error('Database error'));
+
+    const response = await request(app)
+      .post('/verify-otp')
+      .send({
+        email: 'test@example.com',
+        otp: '12345',
+        firstName: 'John',
+        lastName: 'Doe',
+        phone: '1234567890',
+        password: 'password123',
+        role: 'user',
+      });
+
+    expect(response.status).toBe(500);
+    expect(response.body.message).toBe('Failed to verify OTP');
+  });
 });

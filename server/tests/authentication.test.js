@@ -77,3 +77,73 @@ describe("POST /sign-up", () => {
     expect(User.prototype.save).toHaveBeenCalledTimes(1);
   });
 });
+
+describe("PATCH /reset-password", () => {
+  let mockUser;
+
+  beforeEach(() => {
+    mockUser = {
+      email: 'test@example.com',
+      otp: '12345',
+      password: 'oldPassword',
+      save: jest.fn().mockResolvedValue({}),
+    };
+
+    bcrypt.hash.mockResolvedValue('hashedPassword');
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('should return 400 if the OTP or email is invalid', async () => {
+    User.findOne.mockResolvedValue(null);
+
+    const response = await request(app)
+      .patch('/reset-password')
+      .send({
+        email: 'test@example.com',
+        otp: '12345',
+        password: 'newPassword123',
+      });
+
+    expect(response.status).toBe(400);
+    expect(response.text).toBe('Invalid OTP or email');
+    expect(User.findOne).toHaveBeenCalledWith({ email: 'test@example.com', otp: '12345' });
+  });
+
+  it('should reset the password and return success message if the OTP and email are valid', async () => {
+    User.findOne.mockResolvedValue(mockUser);
+
+    const response = await request(app)
+      .patch('/reset-password')
+      .send({
+        email: 'test@example.com',
+        otp: '12345',
+        password: 'newPassword123',
+      });
+
+    expect(response.status).toBe(200);
+    expect(response.body.message).toBe('Password reset successful!');
+    expect(User.findOne).toHaveBeenCalledWith({ email: 'test@example.com', otp: '12345' });
+    expect(bcrypt.hash).toHaveBeenCalledWith('newPassword123', 10);
+    expect(mockUser.save).toHaveBeenCalled();
+    expect(mockUser.password).toBe('hashedPassword');
+    expect(mockUser.otp).toBe('');
+  });
+
+  it('should return 500 if there is a server error', async () => {
+    User.findOne.mockRejectedValue(new Error('Database error'));
+
+    const response = await request(app)
+      .patch('/reset-password')
+      .send({
+        email: 'test@example.com',
+        otp: '12345',
+        password: 'newPassword123',
+      });
+
+    expect(response.status).toBe(500);
+    expect(response.text).toBe('Server error');
+  });
+});

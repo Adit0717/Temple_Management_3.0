@@ -104,3 +104,99 @@ describe("DELETE /services/:id", () => {
     expect(Service.findByIdAndDelete).toHaveBeenCalledTimes(1);
   });
 });
+
+describe("POST /add-service", () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  test("should add a new service successfully and return 201", async () => {
+    const mockService = {
+      title: "Ganesh Puja",
+      description: "Performed to seek Lord Ganesha’s blessings for success.",
+      category: "Pujas",
+    };
+
+    Service.mockImplementation(() => ({
+      save: jest.fn().mockResolvedValue(mockService),
+    }));
+
+    const response = await request(app)
+      .post("/add-service")
+      .send(mockService);
+
+    expect(response.status).toBe(201);
+    expect(response.text).toBe("Service added successfully");
+    expect(Service).toHaveBeenCalledTimes(1);
+  });
+
+  test("should return 500 if there is an error adding the service", async () => {
+    Service.mockImplementation(() => ({
+      save: jest.fn().mockRejectedValue(new Error("Database error")),
+    }));
+
+    const response = await request(app)
+      .post("/add-service")
+      .send({
+        title: "Ganesh Puja",
+        description: "Performed to seek Lord Ganesha’s blessings for success.",
+        category: "Pujas",
+      });
+
+    expect(response.status).toBe(500);
+    expect(response.text).toBe("Error adding service to the database");
+    expect(Service).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe("PUT /services/:id", () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  test("should update a service successfully and return 200", async () => {
+    const serviceId = "67614ab0980d14bab88bd070";
+    const updatedService = {
+      title: "Updated Ganesh Puja",
+      description: "Updated description for Ganesh Puja",
+    };
+
+    Service.findByIdAndUpdate.mockResolvedValue({ _id: serviceId, ...updatedService });
+
+    const response = await request(app)
+      .put(`/services/${serviceId}`)
+      .send(updatedService);
+
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual({ _id: serviceId, ...updatedService });
+    expect(Service.findByIdAndUpdate).toHaveBeenCalledWith(serviceId, updatedService, { new: true });
+    expect(Service.findByIdAndUpdate).toHaveBeenCalledTimes(1);
+  });
+
+  test("should return 200 with null body if the service is not found", async () => {
+    const serviceId = "67614abe980d14bab88bd073";
+    Service.findByIdAndUpdate.mockResolvedValue(null);
+  
+    const response = await request(app)
+      .put(`/services/${serviceId}`)
+      .send({ title: "Updated Service" });
+  
+    expect(response.status).toBe(200);
+    expect(response.body).toBeNull();
+    expect(Service.findByIdAndUpdate).toHaveBeenCalledTimes(1);
+  });
+  
+
+  test("should return 500 if there is an error updating the service", async () => {
+    const serviceId = "67614ab0980d14bab88bd070";
+    Service.findByIdAndUpdate.mockRejectedValue(new Error("Database error"));
+
+    const response = await request(app)
+      .put(`/services/${serviceId}`)
+      .send({ title: "Updated Service" });
+
+    expect(response.status).toBe(500);
+    expect(response.text).toContain("Error updating announcement");
+    expect(Service.findByIdAndUpdate).toHaveBeenCalledTimes(1);
+  });
+});
