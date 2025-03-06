@@ -75,7 +75,11 @@ const DevoteeAppointments = () => {
   return (
     <div>
       
-      <div className="appointments-container">
+      <div className="appointments-container" 
+      style={{
+        backgroundColor: "#fff",
+        padding: "30px"
+      }}>
         <h2 className="appointments-header">Book an Appointment with a priest</h2>
         <div className="appointments-content">
           {/* Left Side: Priest Information */}
@@ -83,13 +87,13 @@ const DevoteeAppointments = () => {
             className="priest-info"
             style={{
               marginRight: "20px",
-              backgroundColor: "#fff",
+              backgroundColor: "#fdf8e3",
               padding: "20px",
               borderRadius: "10px",
               boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
             }}
           >
-            <h3 style={{ fontSize: "24px", marginBottom: "20px", color: "#333", textAlign: "center" }}>
+            <h3 style={{ fontSize: "24px", marginBottom: "20px", color: "#f7941d", textAlign: "center" }}>
               Priest Information
             </h3>
             {priests.length === 0 ? (
@@ -141,7 +145,7 @@ const DevoteeAppointments = () => {
 
           {/* Right Side: Appointment Form (Unchanged) */}
           <div className="appointment-form">
-            <h3>Book your slot</h3>
+            <h3 style={{ fontSize: "24px", marginBottom: "20px", color: "#f7941d", textAlign: "center" }}>Book your slot</h3>
             <form onSubmit={handleBookAppointment}>
               <div className="form-group">
                 <label>Select Priest:</label>
