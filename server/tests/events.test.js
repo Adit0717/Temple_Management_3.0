@@ -103,7 +103,6 @@ describe("PUT /events/:id", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
-
   test("should update an event successfully and return 200", async () => {
     const eventId = "67614ab0980d14bab88bd099";
     const updatedEvent = {
@@ -111,27 +110,21 @@ describe("PUT /events/:id", () => {
       start: "2025-07-20T00:00:00.000Z",
       allDay: false,
     };
-
-    // ✅ Use jest.spyOn to properly mock the function
     jest.spyOn(Event, "findByIdAndUpdate").mockResolvedValue({ _id: eventId, ...updatedEvent });
-
     const response = await request(app)
       .put(`/events/${eventId}`)
       .send(updatedEvent);
-
     expect(response.status).toBe(200);
     expect(response.body).toEqual({ _id: eventId, ...updatedEvent });
     expect(Event.findByIdAndUpdate).toHaveBeenCalledTimes(1);
     expect(Event.findByIdAndUpdate).toHaveBeenCalledWith(
-      expect.any(String), // Allow any string (fix for ObjectId issue)
+      expect.any(String), 
       updatedEvent,
       { new: true, runValidators: true }
     );
   });
-
   it('should return 404 status if event is not found', async () => {
     Event.findByIdAndUpdate.mockResolvedValue(null);
-
     const response = await request(app)
       .put('/events/507f1f77bcf86cd799439011')
       .send({
@@ -139,14 +132,11 @@ describe("PUT /events/:id", () => {
         start: '2023-10-01T00:00:00.000Z',
         allDay: true,
       });
-
     expect(response.status).toBe(404);
     expect(response.body).toEqual({ message: "Event not found" });
   });
-
   it('should return 500 status if there is an error', async () => {
     Event.findByIdAndUpdate.mockRejectedValue(new Error('Database error'));
-
     const response = await request(app)
       .put('/events/507f1f77bcf86cd799439011')
       .send({
@@ -154,7 +144,6 @@ describe("PUT /events/:id", () => {
         start: '2023-10-01T00:00:00.000Z',
         allDay: true,
       });
-
     expect(response.status).toBe(500);
     expect(response.body).toEqual({ message: "Error saving event" });
   });
