@@ -154,14 +154,14 @@ select:focus {
 }
 
 .forgot-password a {
-  color: #ff6f00;
+  color: #ffa726;
   /* Orange color matching button */
   text-decoration: none;
   transition: color 0.3s ease-in-out;
 }
 
 .forgot-password a:hover {
-  color: #ffa726;
+  color: #ff6f00;
   /* Lighter orange on hover */
   text-decoration: underline;
 }
