@@ -331,6 +331,16 @@ app.get('/get-appointments', async (req, res) => {
   }
 });
 
+app.post('/get-appointments', async (req, res) => {
+    try {
+      const { name } = req.body;
+      const appointments = await Appointment.find({ userName: name });
+      res.json(appointments);
+    } catch (error) {
+      res.status(500).send('Error fetching appointments: ' + error.message);
+    }
+  });
+  
 app.delete('/delete-appointment/:id', async (req, res) => {
   try {
     const { id } = req.params;
