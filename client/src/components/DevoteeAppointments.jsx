@@ -196,6 +196,7 @@ const DevoteeAppointments = () => {
                   value={info}
                   onChange={(e) => setInfo(e.target.value)}
                   placeholder="Enter any additional information for the priest..."
+                  required
                 />
               </div>
 
