@@ -22,6 +22,7 @@ import ResetPassword from './components/ResetPassword';
 import Navbar from './components/NavBar';
 import NavbarDevotee from './components/NavBarDevotee'
 import NavbarAdmin from "./components/NavBarAdmin";
+import DevoteeViewAppointments from './components/DevoteeViewAppointments';
 
 //<Route path='/view-appointments' element={<PriestView />} />
 
@@ -68,6 +69,7 @@ function App() {
           <Route path='/view-all-appointments' element={<AdministratorAppointments />} />
           <Route path='/forgot-password' element={<ForgotPassword />} />
           <Route path='/reset-password' element={<ResetPassword />} />
+          <Route path='/view-appointment' element={<DevoteeViewAppointments />} />
         </Routes>
       </Router>
     </div>

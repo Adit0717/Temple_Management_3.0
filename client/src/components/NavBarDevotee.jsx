@@ -36,7 +36,14 @@ const NavbarDevotee = () => {
         <li><a href="/events">Events</a></li>
         <li><a href="/donations">Donations</a></li>
         <li><a href="/services">Services</a></li>
-        <li><a href="/book-appointment">Book Appointments</a></li>
+        
+        <li className="dropdown">
+          <a href="/">Appointments</a>
+          <ul className="dropdown-menu">
+            <li><a href="/book-appointment">Book</a></li>
+            <li><a href="/view-appointment">View</a></li>            
+          </ul>
+        </li>     
         <div className='logout-container'>
           <button className="logout-button" onClick={handleLogout}>
             Logout

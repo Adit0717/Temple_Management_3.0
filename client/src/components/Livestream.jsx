@@ -20,17 +20,17 @@ const LiveStream = () => {
             <div className="live-stream-section">
                 <div className="live-stream-card">
                     <h1>Live Stream Updates!</h1>
-                    <p>Our next livestream is scheduled for 6pm on December 20th 2024 (Aushadhadhivas, Kesaradhivas).</p>
+                    <p>Our next livestream is scheduled for 6pm on April 1st 2025 (Aushadhadhivas, Kesaradhivas).</p>
                     <p>The channels listed below will be streaming live during the scheduled event:</p>
                     <ul>
                         <li>
                             <a href="https://www.youtube.com/@DoordarshanNational" target="_blank" rel="noopener noreferrer" className="stream-link">
-                                YouTube channel
+                                Watch on Youtube
                             </a>
                         </li>
                         <li>
                             <a href="https://www.facebook.com/srirammandircom/" target="_blank" rel="noopener noreferrer" className="stream-link">
-                                Facebook live
+                                Watch Facebook live
                             </a>
                         </li>
                     </ul>

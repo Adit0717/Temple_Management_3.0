@@ -6,7 +6,7 @@ import Footer from "./Footer";
 import pdf from "../assets/Donation-form.pdf"
 
 const Donations = () => {
-  const [selectedPledge, setSelectedPledge] = useState("25");
+  const [selectedPledge, setSelectedPledge] = useState("20");
   const navigate = useNavigate();
 
   const handlePledgeChange = (e) => {
@@ -53,8 +53,8 @@ const Donations = () => {
             <h3>Monthly Donation:</h3>
             <p>via Credit Card or Debit Card</p>
             <select value={selectedPledge} onChange={handlePledgeChange}>              
-              <option value="25">$25 per month</option>
-              <option value="55">$55 per month</option>
+              <option value="20">$20 per month</option>
+              <option value="50">$50 per month</option>
               <option value="100">$100 per month</option>
             </select>
             <button
