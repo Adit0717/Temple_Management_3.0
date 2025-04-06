@@ -37,11 +37,10 @@ describe("Navbar role-based navigation", () => {
     expect(screen.getByText("Live-Stream")).toBeInTheDocument();
     expect(screen.getByText("About")).toBeInTheDocument();
     expect(screen.getByText("Events")).toBeInTheDocument();
-    expect(screen.getByText("Services")).toBeInTheDocument();
-    expect(screen.getByText("Logout")).toBeInTheDocument();
-
     expect(screen.getByText("Donations")).toBeInTheDocument();
-    expect(screen.getByText("Book Appointments")).toBeInTheDocument();
+    expect(screen.getByText("Services")).toBeInTheDocument();
+    expect(screen.getByText("Appointments")).toBeInTheDocument();
+    expect(screen.getByText("Logout")).toBeInTheDocument();
 
     expect(screen.queryByText("View Appointments")).not.toBeInTheDocument();
   });

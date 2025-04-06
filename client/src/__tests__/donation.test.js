@@ -44,8 +44,8 @@ describe("Donations Page UI & Buttons", () => {
     const dropdown = screen.getByRole("combobox"); 
     expect(dropdown).toBeInTheDocument();
 
-    expect(screen.getByText("$25 per month")).toBeInTheDocument();
-    expect(screen.getByText("$55 per month")).toBeInTheDocument();
+    expect(screen.getByText("$20 per month")).toBeInTheDocument();
+    expect(screen.getByText("$50 per month")).toBeInTheDocument();
     expect(screen.getByText("$100 per month")).toBeInTheDocument();
   });
 
