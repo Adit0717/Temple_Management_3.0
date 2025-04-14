@@ -91,6 +91,42 @@ describe("Appointments API Tests", () => {
     });
   });
 
+  describe("POST /get-appointments", () => {
+    it("should return appointments for a given user name", async () => {
+      const mockAppointments = [
+        {
+          _id: "abc123",
+          userName: "John Doe",
+          priest: "Priest A",
+          date: "2025-04-10T00:00:00.000Z",
+          time: "10:00 AM",
+          information: "Need blessings",
+        },
+      ];
+  
+      Appointment.find.mockResolvedValue(mockAppointments);
+  
+      const response = await request(app)
+        .post("/get-appointments")
+        .send({ name: "John Doe" });
+  
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual(mockAppointments);
+      expect(Appointment.find).toHaveBeenCalledWith({ userName: "John Doe" });
+    });
+  
+    it("should handle server errors", async () => {
+      Appointment.find.mockRejectedValue(new Error("DB Error"));
+  
+      const response = await request(app)
+        .post("/get-appointments")
+        .send({ name: "Error User" });
+  
+      expect(response.status).toBe(500);
+      expect(response.text).toContain("Error fetching appointments");
+    });
+  });
+
   describe("PATCH /update-appointment/:id", () => {
     test("should update the status of an existing appointment and return 200", async () => {
       const appointmentId = new mongoose.Types.ObjectId();
