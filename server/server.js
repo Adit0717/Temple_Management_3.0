@@ -15,6 +15,7 @@ const nodemailer = require('nodemailer');
 const crypto = require('crypto');
 const session = require('express-session');
 const multer = require('multer');
+const { body, validationResult } = require('express-validator');
 
 
 const app = express();
@@ -218,7 +219,18 @@ app.patch('/reset-password', async (req, res) => {
     }
   });
 */
-app.post('/send-otp', async (req, res) => {
+app.post('/send-otp',
+  [
+    body('email')
+      .isEmail()
+      .withMessage('Please enter a valid email address')
+      .normalizeEmail(),
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
     const { email } = req.body;
     const otp = Math.floor(100000 + Math.random() * 900000).toString(); // Generate 6-digit OTP
 
@@ -286,7 +298,21 @@ app.get('/get-priests', async (req, res) => {
 
 //------------------------------------------------------------------------------------
 //API Endpoints related to Appointments
-app.post('/book-appointment', async (req, res) => {
+app.post('/book-appointment', 
+  [
+    body('priestId').notEmpty().withMessage('Priest ID is required'),
+    body('priest').notEmpty().withMessage('Priest name is required'),
+    body('date').isISO8601().toDate().withMessage('Valid date is required'),
+    body('time').notEmpty().withMessage('Time is required'),
+    body('information').notEmpty().withMessage('Information is required'),
+    body('userName').notEmpty().withMessage('User name is required'),
+    body('email').isEmail().withMessage('Valid email is required').normalizeEmail(),
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
   try {
     const { priestId, priest, date, time, information, userName, email } = req.body;
     const newAppointment = new Appointment({
@@ -444,7 +470,17 @@ app.delete('/announcements/:id', async (req, res) => {
 //API endpoints related to Services
 app.use(express.urlencoded({ extended: true }));
 
-app.post('/add-service', async (req, res) => {
+app.post('/add-service', 
+  [
+    body('title').notEmpty().withMessage('Title is required'),
+    body('description').notEmpty().withMessage('Description is required'),
+    body('category').notEmpty().withMessage('Category is required'),
+  ],
+  async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
   const { title, description, category } = req.body;
 
   try {
@@ -502,7 +538,17 @@ app.delete('/services/:id', async (req, res) => {
 
 //------------------------------------------------------------------------------------
 //API Endpoints related to Events
-app.post('/events', async (req, res) => {
+app.post('/events', 
+  [
+    body('title').notEmpty().withMessage('Title is required'),
+    body('start').notEmpty().withMessage('Start date is required').isISO8601().withMessage('Start must be a valid ISO date'),
+    body('allDay').optional().isBoolean().withMessage('allDay must be a boolean'),
+  ],
+  async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
   try {
     const { title, start, allDay } = req.body;
 
