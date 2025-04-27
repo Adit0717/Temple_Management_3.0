@@ -127,7 +127,30 @@ app.post('/verify-otp', async (req, res) => {
 
 
 //API Endpoints for Login and Signup functionality
-app.post('/sign-up', async (req, res) => {
+app.post('/sign-up',
+  [
+    body('firstName')
+      .notEmpty()
+      .withMessage('First name is required'),
+    body('lastName')
+      .notEmpty()
+      .withMessage('Last name is required'),
+    body('email')
+      .isEmail()
+      .withMessage('Please enter a valid email address')
+      .normalizeEmail(),
+    body('phone')
+      .isMobilePhone()
+      .withMessage('Please enter a valid phone number'),
+    body('password')
+      .isLength({ min: 6 })
+      .withMessage('Password must be at least 6 characters long')
+  ],
+   async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
     const { firstName, lastName, email, phone, password } = req.body;
     const empId = Math.floor(10000 + Math.random() * 90000).toString();
   
@@ -159,8 +182,25 @@ app.post('/sign-up', async (req, res) => {
       }      
   });
 
-app.post('/login', async (req, res) => {
-  const { email, password, role } = req.body;
+app.post('/login',
+  [
+    body('email')
+      .isEmail()
+      .withMessage('Please enter a valid email address')
+      .normalizeEmail(),
+    body('password')
+      .notEmpty()
+      .withMessage('Password is required'),
+    body('role')
+      .notEmpty()
+      .withMessage('Role is required'),
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    const { email, password, role } = req.body;
 
   const user = await User.findOne({ email, role });
 
@@ -180,8 +220,24 @@ app.post('/login', async (req, res) => {
   return res.status(200).json({ message: 'Logged successfully', user: user, token: token });
 });
 
-
-app.patch('/reset-password', async (req, res) => {
+app.patch('/reset-password', 
+  [
+    body('email')
+      .isEmail()
+      .withMessage('Please provide a valid email address')
+      .normalizeEmail(),
+    body('otp')
+      .isLength({ min: 4, max: 6 })
+      .withMessage('OTP must be 4 to 6 digits'),
+    body('password')
+      .isLength({ min: 6 })
+      .withMessage('Password must be at least 6 characters long')
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
   const { email, otp, password } = req.body;
   try {
     const user = await User.findOne({ email: email, otp: otp });
